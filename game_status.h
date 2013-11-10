@@ -2,6 +2,7 @@
 #define GAME_STATUS_H_
 
 #include <vector>
+#include <utility>
 #include "./field.h"
 
 class GameStatus {
@@ -13,6 +14,8 @@ class GameStatus {
     GameStatus(const int);
     int board_size();
     std::vector<Field>& field_ref();
+    void set_field(int, Field::colors);
+    bool is_finished();
 };
 
 #endif  // GAME_STATUS_H_

@@ -4,13 +4,15 @@
 #include <iostream>
 
 class Field {
+
   public:
-    enum choices { EMPTY, WHITE, BLACK };
+    enum colors { EMPTY, WHITE, BLACK };
     Field();
-    choices get_status();
+    colors get_color();
+    void set_color(Field::colors);
 
   private:
-    Field::choices status;
+    Field::colors _color;
 };
 
 std::ostream& operator<< (std::ostream&, Field&);

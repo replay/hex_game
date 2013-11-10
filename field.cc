@@ -1,20 +1,24 @@
 #include "./field.h"
 
 Field::Field() {
-  status = choices::EMPTY;
+  _color = colors::EMPTY;
 }
 
-Field::choices Field::get_status() {
-  return status;
+Field::colors Field::get_color() {
+  return _color;
+}
+
+void Field::set_color(Field::colors color) {
+  _color = color;
 }
 
 std::ostream& operator<< (std::ostream& os, Field& field) {
-  switch (field.get_status()) {
-    case Field::choices::EMPTY:
+  switch (field.get_color()) {
+    case Field::colors::EMPTY:
       return os << ".";
-    case Field::choices::WHITE:
+    case Field::colors::WHITE:
       return os << "X";
-    case Field::choices::BLACK:
+    case Field::colors::BLACK:
       return os << "O";
   }
   return os;

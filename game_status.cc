@@ -16,3 +16,12 @@ int GameStatus::board_size() {
 std::vector<Field>& GameStatus::field_ref() {
   return _fields;
 }
+
+bool GameStatus::is_finished() {
+  return false;
+}
+
+void GameStatus::set_field(int field, Field::colors color) {
+  _fields[field].set_color(color);
+}
+
