@@ -1,0 +1,10 @@
+*.swp
+*.gcda
+*.gcno
+*.gch
+*.o
+cpplint.py
+hex
+gtest/gtest
+coverage.junit.xml
+coverage.xml
