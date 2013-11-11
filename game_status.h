@@ -14,7 +14,7 @@ class GameStatus {
     GameStatus(const int);
     int board_size();
     std::vector<Field>& field_ref();
-    void set_field(int, Field::colors);
+    bool set_field(int, Field::colors);
     bool is_finished();
 };
 

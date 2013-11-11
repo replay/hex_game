@@ -9,12 +9,19 @@ class Player {
   private:
     Field::colors _color;
     GameStatus& _game_status;
+    std::string _player_name;
 
   public:
-    Player(GameStatus& _game_status);
+    Player(GameStatus&);
+    Player(GameStatus&, const std::string);
+    Player(GameStatus&, const char*);
     virtual move_t get_move()=0;
     void set_color(Field::colors);
     Field::colors get_color();
+    void set_player_name(std::string);
+    std::string get_player_name();
 };
+
+std::ostream& operator<< (std::ostream&, Player*);
 
 #endif  // PLAYER_H_

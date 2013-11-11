@@ -21,7 +21,13 @@ bool GameStatus::is_finished() {
   return false;
 }
 
-void GameStatus::set_field(int field, Field::colors color) {
-  _fields[field].set_color(color);
+bool GameStatus::set_field(int field, Field::colors color) {
+  if (_fields[field].get_color() == Field::colors::EMPTY) {
+    _fields[field].set_color(color);
+  } else{
+    return false;
+  }
+
+  return true;
 }
 
