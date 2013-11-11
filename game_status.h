@@ -5,13 +5,14 @@
 #include <utility>
 #include <map>
 #include "./field.h"
+#include "./edge_graph.h"
 
 class GameStatus {
   private:
     std::vector<Field> _fields;
+    EdgeGraph _edge_graph;
     int _board_size;
     bool _finished=false;
-    std::map<Field::colors, std::vector< std::pair< int, int > > > _edges;
     void _find_edges(int, Field::colors);
     void _add_edges(int, int, Field::colors);
     void _surrounding_hexagon(int, std::vector< std::pair<int, bool> >&);
