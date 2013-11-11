@@ -4,7 +4,9 @@ EdgeGraph::EdgeGraph(const int board_size, std::vector<Field>& fields)
   : _board_size(board_size),
     _fields(fields) {}
 
-void EdgeGraph::_update_edges(int field, Field::colors color) {
+bool EdgeGraph::find_path(int src, int dst, Field::colors color) {}
+
+void EdgeGraph::update_edges(int field, Field::colors color) {
   std::vector< std::pair<int, bool> > checklist;
   std::vector< int > neighbour_fields;
   

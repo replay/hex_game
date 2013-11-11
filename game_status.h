@@ -12,10 +12,12 @@ class GameStatus {
     std::vector<Field> _fields;
     EdgeGraph _edge_graph;
     int _board_size;
-    bool _finished=false;
+    bool _finished = false;
+    Field::colors _winner = Field::colors::EMPTY;
     void _find_edges(int, Field::colors);
     void _add_edges(int, int, Field::colors);
     void _surrounding_hexagon(int, std::vector< std::pair<int, bool> >&);
+    void _build_paths();
 
   public:
     GameStatus(const int);
@@ -25,6 +27,7 @@ class GameStatus {
     bool is_finished();
     void set_finished();
     bool has_winner();
+    Field::colors get_winner();
 };
 
 #endif  // GAME_STATUS_H_
