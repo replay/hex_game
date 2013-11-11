@@ -47,9 +47,11 @@ bool GameStatus::has_winner() {
 
   for (int i = 0; i < this->_board_size; ++i) {
     for (int j = 0; j < this->_board_size; ++j) {
-      if (this->_edge_graph.find_path(i, (this->_board_size - 1) * this->_board_size + j, Field::colors::BLACK))
+      if (this->_edge_graph.find_path(i,
+        (this->_board_size - 1) * this->_board_size + j, Field::colors::BLACK)) {
         this->_winner = Field::colors::BLACK;
         return true;
+      }
     }
   }
 
