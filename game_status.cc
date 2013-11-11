@@ -1,33 +1,35 @@
 #include "./game_status.h"
 
-void GameStatus::_initialize_board_fields() {
-  _fields.resize(_board_size * _board_size);
-}
-
 GameStatus::GameStatus(const int board_size)
   : _board_size(board_size) {
-  _initialize_board_fields();
+  this->_fields.resize(this->_board_size * this->_board_size);
 }
 
 int GameStatus::board_size() {
-  return _board_size;
+  return this->_board_size;
 }
 
 std::vector<Field>& GameStatus::field_ref() {
-  return _fields;
+  return this->_fields;
 }
 
 bool GameStatus::is_finished() {
-  return false;
+  return this->_finished;
+}
+
+void GameStatus::set_finished() {
+  this->_finished = true;
 }
 
 bool GameStatus::set_field(int field, Field::colors color) {
-  if (_fields[field].get_color() == Field::colors::EMPTY) {
-    _fields[field].set_color(color);
-  } else{
+  if (field < 0)
     return false;
-  }
+  if (field >= this->_fields.size())
+    return false;
+  if (this->_fields[field].get_color() != Field::colors::EMPTY)
+    return false;
 
+  this->_fields[field].set_color(color);
   return true;
 }
 

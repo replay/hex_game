@@ -24,7 +24,7 @@ void BoardPrinter::print(GameStatus& s) {
 
     if ((i - s.field_ref().begin()) % board_size == board_size - 1 &&
         (i - s.field_ref().begin()) != board_size * board_size - 1) {
-      _newline(board_size, indentations);
+      this->_newline(board_size, indentations);
     }
   }
 

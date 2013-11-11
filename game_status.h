@@ -9,13 +9,14 @@ class GameStatus {
   private:
     std::vector<Field> _fields;
     int _board_size;
-    void _initialize_board_fields();
+    bool _finished=false;
   public:
     GameStatus(const int);
     int board_size();
     std::vector<Field>& field_ref();
     bool set_field(int, Field::colors);
     bool is_finished();
+    void set_finished();
 };
 
 #endif  // GAME_STATUS_H_

@@ -12,42 +12,45 @@ Hex::Hex(int board_size)
     }
 
     // create the players
-    _player1 = new HumanPlayer(_game_status, "the whit0r");
-    _player1->set_color(Field::colors::BLACK);
-    _player2 = new HumanPlayer(_game_status, "another one");
-    _player2->set_color(Field::colors::WHITE);
-   
-    game();
+    this->_player1 = new HumanPlayer(_game_status, "the whit0r");
+    this->_player1->set_color(Field::colors::BLACK);
+    this->_player2 = new HumanPlayer(_game_status, "another one");
+    this->_player2->set_color(Field::colors::WHITE);
+
+    this->game();
 }
 
 Hex::~Hex() {
-  delete _player1;
-  delete _player2;
+  delete this->_player1;
+  delete this->_player2;
 }
 
 void Hex::game() {
   Player* player;
-  for (int i = 0; !_game_status.is_finished(); ++i) {
-    _board_printer.print(_game_status);
+  for (int i = 0; !this->_game_status.is_finished(); ++i) {
+    this->_board_printer.print(_game_status);
 
     if (i % 2 == 0) {
-      player = _player1;
+      player = this->_player1;
     } else {
-      player = _player2;
+      player = this->_player2;
     }
+
     std::cout << player << "'s turn" << std::endl;
-    move(*player);
+    this->move(*player);
   }
 }
 
 void Hex::move(Player& player) {
-  int fieldnum = _move_to_fieldnum(player.get_move());
-  while (!_game_status.set_field(fieldnum, player.get_color())) {
+  int fieldnum = this->_move_to_fieldnum(player.get_move());
+  while (!this->_game_status.set_field(fieldnum, player.get_color())) {
     std::cout << "illegal move, try again" << std::endl;
-    fieldnum = _move_to_fieldnum(player.get_move());
+    fieldnum = this->_move_to_fieldnum(player.get_move());
   }
 }
 
 int Hex::_move_to_fieldnum(move_t m) {
-  return m.second * _board_size + m.first;
+  if (m.first >= this->_board_size || m.second >= this->_board_size)
+    return -1;
+  return m.second * this->_board_size + m.first;
 }

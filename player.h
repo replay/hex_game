@@ -9,6 +9,8 @@ class Player {
   private:
     Field::colors _color;
     GameStatus& _game_status;
+
+  protected:
     std::string _player_name;
 
   public:

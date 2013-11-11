@@ -1,15 +1,15 @@
 #include "./field.h"
 
 Field::Field() {
-  _color = colors::EMPTY;
+  this->_color = colors::EMPTY;
 }
 
 Field::colors Field::get_color() {
-  return _color;
+  return this->_color;
 }
 
 void Field::set_color(Field::colors color) {
-  _color = color;
+  this->_color = color;
 }
 
 std::ostream& operator<< (std::ostream& os, Field& field) {
