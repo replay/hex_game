@@ -10,10 +10,10 @@ class EdgeGraph {
   private:
     const int _board_size;
     std::vector<Field>& _fields;
-    std::map<Field::colors, std::vector< std::pair< int, int > > > _edges;
+    std::map<Field::colors, std::map< int, std::vector< int > > > _edges;
   public:
     EdgeGraph(const int, std::vector<Field>&);
-    void _find_edges(int, Field::colors);
+    void _update_edges(int, Field::colors);
     void _add_edges(int, int, Field::colors);
     void _surrounding_hexagon(int, std::vector< std::pair<int, bool> >&);
 };

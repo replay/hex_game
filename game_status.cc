@@ -31,7 +31,7 @@ bool GameStatus::set_field(int field, Field::colors color) {
     return false;
 
   this->_fields[field].set_color(color);
-  this->_edge_graph._find_edges(field, color);
+  this->_edge_graph._update_edges(field, color);
   return true;
 }
 

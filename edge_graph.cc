@@ -4,7 +4,7 @@ EdgeGraph::EdgeGraph(const int board_size, std::vector<Field>& fields)
   : _board_size(board_size),
     _fields(fields) {}
 
-void EdgeGraph::_find_edges(int field, Field::colors color) {
+void EdgeGraph::_update_edges(int field, Field::colors color) {
   std::vector< std::pair<int, bool> > checklist;
   std::vector< int > neighbour_fields;
   
@@ -37,7 +37,7 @@ void EdgeGraph::_surrounding_hexagon(
     checklist[2].second = false;
   }
   // field is on the top edge
-  if (field <= _board_size) {
+  if (field < _board_size) {
     checklist[0].second = false;
     checklist[1].second = false;
   }
@@ -50,6 +50,6 @@ void EdgeGraph::_surrounding_hexagon(
 
 // add a bidirectional edge to the vertex of the current color
 void EdgeGraph::_add_edges(int f1, int f2, Field::colors color) {
-  _edges[color].push_back( std::pair<int, int>(f1, f2));
-  _edges[color].push_back( std::pair<int, int>(f2, f1));
+  _edges[color][f1].push_back( f2 );
+  _edges[color][f2].push_back( f1 );
 }
