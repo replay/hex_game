@@ -6,13 +6,13 @@ Hex::Hex(int board_size)
  : _board_size(board_size),
    _board_printer(BoardPrinter()),
    _game_status(GameStatus(board_size)) {
-   game();
-
    _player1 = new HumanPlayer(_game_status);
    _player1->set_color(Field::colors::BLACK);
 
    _player2 = new HumanPlayer(_game_status);
    _player2->set_color(Field::colors::WHITE);
+   
+   game();
 }
 
 Hex::~Hex() {

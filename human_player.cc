@@ -5,6 +5,5 @@ HumanPlayer::HumanPlayer(GameStatus& game_status)
 }
 
 move_t HumanPlayer::get_move() {
-  move_t move = move_t(2, 3);
-  return move;
+  return move_t(2, 3);
 }
