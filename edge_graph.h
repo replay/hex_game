@@ -4,6 +4,7 @@
 #include <vector>
 #include <map>
 
+#include "./hex_board.h"
 #include "./field.h"
 
 class EdgeGraph {
@@ -12,7 +13,7 @@ class EdgeGraph {
     std::vector<Field>& _fields;
     std::map<Field::colors, std::map< int, std::vector< int > > > _edges;
     void _add_edges(int, int, Field::colors);
-    void _surrounding_hexagon(int, std::vector< std::pair<int, bool> >&);
+
   public:
     EdgeGraph(const int, std::vector<Field>&);
     void update_edges(int, Field::colors);

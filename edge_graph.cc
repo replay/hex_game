@@ -7,47 +7,13 @@ EdgeGraph::EdgeGraph(const int board_size, std::vector<Field>& fields)
 bool EdgeGraph::find_path(int src, int dst, Field::colors color) {}
 
 void EdgeGraph::update_edges(int field, Field::colors color) {
-  std::vector< std::pair<int, bool> > checklist;
-  std::vector< int > neighbour_fields;
+  std::vector<int> adjacent_fields;
   
-  this->_surrounding_hexagon(field, checklist);
+  adjacent_fields = HexBoard::get_adjacent_fields(field, this->_board_size);
 
-  for (auto i: checklist)
-    if (i.second)
-      if (_fields[i.first].get_color() == color)
-        this->_add_edges(field, i.first, color);
-}
-
-void EdgeGraph::_surrounding_hexagon(
-  int field, std::vector< std::pair<int, bool> >& checklist) {
-  // adding all possible neighbours to checklist
-  checklist.push_back(std::pair<int, bool>(field - _board_size, true));
-  checklist.push_back(std::pair<int, bool>(field - _board_size + 1, true));
-  checklist.push_back(std::pair<int, bool>(field + 1, true));
-  checklist.push_back(std::pair<int, bool>(field + _board_size, true));
-  checklist.push_back(std::pair<int, bool>(field + _board_size - 1, true));
-  checklist.push_back(std::pair<int, bool>(field - 1, true));
-
-  // field is on the left edge
-  if (field % _board_size == 0) {
-    checklist[4].second = false;
-    checklist[5].second = false;
-  }
-  // field is on the right edge
-  if ((field + 1) % _board_size == 0) {
-    checklist[1].second = false;
-    checklist[2].second = false;
-  }
-  // field is on the top edge
-  if (field < _board_size) {
-    checklist[0].second = false;
-    checklist[1].second = false;
-  }
-  // field is on the bottom edge
-  if (field >= _board_size * (_board_size - 1)) {
-    checklist[3].second = false;
-    checklist[4].second = false;
-  }
+  for (auto i: adjacent_fields)
+    if (_fields[i].get_color() == color)
+      this->_add_edges(field, i, color);
 }
 
 // add a bidirectional edge to the vertex of the current color
