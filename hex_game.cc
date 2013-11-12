@@ -11,14 +11,14 @@ HexGame::HexGame() {
 
   // ask who gets the first move
   // the one who gets the first move will play west->east
-  if (AsciiArt::who_begins(this->_players[0], this->_players[1]) == 1) {
-    this->_players[0]->set_board_direction(board_direction::WEST_EAST);
-    this->_players[1]->set_board_direction(board_direction::NORTH_SOUTH);
-    player = this->_players[0];
-  } else {
-    this->_players[0]->set_board_direction(board_direction::NORTH_SOUTH);
-    this->_players[1]->set_board_direction(board_direction::WEST_EAST);
-    player = this->_players[1];
+  player = this->_players[
+    AsciiArt::who_begins(this->_players[0], this->_players[1]) - 1];
+
+  // set the playing direction for each of the two players
+  for (short i = static_cast<short>(board_direction::WEST_EAST);
+       i <= static_cast<short>(board_direction::NORTH_SOUTH); ++i) {
+    player->set_board_direction(static_cast<board_direction>(i));
+    player = this->_swap_player(player);
   }
 
   // let player choose the board size and initialize storage accordingly
@@ -44,8 +44,14 @@ HexGame::HexGame() {
     }
 
     // switch the current player
-    player = (player == this->_players[0] ? this->_players[1] : this->_players[0]);
+    player = this->_swap_player(player);
   }
+}
+
+
+// switch between the two players
+Player* HexGame::_swap_player(Player* player) {
+  return player == this->_players[0] ? this->_players[1] : this->_players[0];
 }
 
 

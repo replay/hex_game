@@ -22,6 +22,7 @@ class HexGame {
     bool _next_move(Player&);
     bool _has_winner();
     void _create_player_src_dst_nodes();
+    Player* _swap_player(Player*);
 
   public:
     HexGame();
