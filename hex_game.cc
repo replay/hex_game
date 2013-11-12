@@ -9,10 +9,16 @@ HexGame::HexGame() {
   this->_player2 = new HumanPlayer(2, "player2", 'O');
 
   // ask who gets the first move
-  if (AsciiArt::who_begins(this->_player1, this->_player2) == 1)
+  // the one who gets the first move will play west->east
+  if (AsciiArt::who_begins(this->_player1, this->_player2) == 1) {
+    this->_player1->set_board_direction(board_direction::WEST_EAST);
+    this->_player2->set_board_direction(board_direction::NORTH_SOUTH);
     player = this->_player1;
-  else
+  } else {
+    this->_player2->set_board_direction(board_direction::WEST_EAST);
+    this->_player1->set_board_direction(board_direction::NORTH_SOUTH);
     player = this->_player2;
+  }
 
   // let player choose the board size and initialize storage accordingly
   this->_board_size = AsciiArt::choose_board_size();

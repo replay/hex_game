@@ -57,15 +57,15 @@ void HexBoard::_newline(const int board_size, int& indentations) {
 
 
 // creates a list of all fields on either the vertical or the horizontal edges
-void HexBoard::get_board_edge_fields(const int board_size, edge_direction dir,
+void HexBoard::get_board_edge_fields(const int board_size, board_direction dir,
   std::pair< std::vector<int>, std::vector<int> >& edges) {
 
-  // initialize for HORIZONTAL
+  // initialize for WEST_EAST
   int incr = 1;
   int dst_start = board_size * (board_size - 1);
 
   // if VERTICAL, then update values
-  if (dir == edge_direction::VERTICAL) {
+  if (dir == board_direction::NORTH_SOUTH) {
     dst_start = board_size - 1;
     incr = board_size;
   }

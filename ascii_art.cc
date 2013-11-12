@@ -77,11 +77,11 @@ void AsciiArt::banner(Player* p1, Player* p2) {
   AsciiArt::three_columns("*",
     p1->get_name(),
     std::string(1, p1->get_symbol()),
-    std::string("connects West <-> East"));
+    direction_string.at(board_direction::WEST_EAST));
   AsciiArt::three_columns("*",
     p2->get_name(),
     std::string(1, p2->get_symbol()),
-    std::string("connects North <-> South"));
+    direction_string.at(board_direction::NORTH_SOUTH));
   AsciiArt::horizontal_line("*");
 }
 

@@ -29,6 +29,14 @@ void Player::set_symbol(const char symbol) {
   this->_symbol = symbol;
 }
 
+void Player::set_board_direction(const board_direction direction) {
+  this->_board_direction = direction;
+}
+
+board_direction Player::get_board_direction() {
+  return this->_board_direction;
+}
+
 int Player::get_id() {
   return this->_id;
 }
