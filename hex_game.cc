@@ -57,6 +57,7 @@ HexGame::~HexGame() {
 
 
 bool HexGame::_next_move(Player& player) {
+  std::vector<int> adjacent_fields;
   int field;
   move_t move = player.get_move();
 
@@ -82,7 +83,8 @@ bool HexGame::_next_move(Player& player) {
   this->_fields[field].use_field(player.get_id(), player.get_symbol());
 
   // create the according edges in the graph
-  this->_edge_graph->update_edges(field, player.get_id());
+  HexBoard::get_adjacent_fields(field, this->_board_size, adjacent_fields);
+  this->_edge_graph->update_edges(field, player.get_id(), adjacent_fields);
 
   // print the move to the console with some ascii art
   AsciiArt::print_players_move(&player, move);
@@ -104,6 +106,9 @@ bool HexGame::_has_winner() {
 // as virtual nodes that each player has to connect to win the game
 void HexGame::_create_player_src_dst_nodes() {
   Player* player;
+
+  // create 2 virtual nodes per player
+  // append them at the end of the existing nodes
   for (int i = 0; i < 2; ++i)
     this->_players[i]->set_src_dst_nodes(std::pair<int, int>(
       this->_board_size * this->_board_size + 1 + i * 2,

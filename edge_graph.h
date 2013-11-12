@@ -4,9 +4,7 @@
 #include <vector>
 #include <map>
 
-#include "./hex_board.h"
 #include "./field.h"
-#include "./player.h"
 
 class EdgeGraph {
   private:
@@ -16,7 +14,7 @@ class EdgeGraph {
 
   public:
     EdgeGraph(const int, std::vector<Field>&);
-    void update_edges(int, int);
+    void update_edges(int, int, std::vector<int>&);
     void add_edge(int, int, int);
 };
 
