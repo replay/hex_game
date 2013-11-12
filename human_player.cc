@@ -1,16 +1,16 @@
 #include "./human_player.h"
 
-HumanPlayer::HumanPlayer(GameStatus& game_status)
-  : Player(game_status) {
+HumanPlayer::HumanPlayer()
+  : Player() {
   std::cout << "enter player's name: ";
   std::cin >> this->_player_name;
 }
 
-HumanPlayer::HumanPlayer(GameStatus& game_status, const std::string player_name)
-  : Player(game_status, player_name) {}
+HumanPlayer::HumanPlayer(const std::string player_name)
+  : Player(player_name) {}
 
-HumanPlayer::HumanPlayer(GameStatus& game_status, const char* player_name)
-  : Player(game_status, player_name) {}
+HumanPlayer::HumanPlayer(const char* player_name)
+  : Player(player_name) {}
 
 move_t HumanPlayer::get_move() {
   int x, y;

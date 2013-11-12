@@ -3,24 +3,32 @@
 
 #include <iostream>
 
-#include "./game_status.h"
 #include "./board_printer.h"
-#include "./player.h"
+#include "./edge_graph.h"
+#include "./human_player.h"
 
 typedef class illegal_move_exception: public std::exception {
 } illegal_move_exception;
 
 class Hex {
   private:
-    GameStatus _game_status;
-    BoardPrinter _board_printer;
+    EdgeGraph _edge_graph;
+
     Player* _player1;
     Player* _player2;
+
+    std::vector<Field> _fields;
+    Field::colors _winner;
+    bool _finished = false;
     int _board_size;
+
+    Field::colors _get_winner();
     int _move_to_fieldnum(move_t);
     void _move(Player&);
     bool _is_finished();
-    void _game();
+    bool _has_winner();
+    bool _set_field(int, Field::colors);
+    void _build_paths();
 
   public:
     Hex(int = 11);

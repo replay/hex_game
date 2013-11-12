@@ -1,9 +1,6 @@
-#include <iostream>
-#include <iomanip>
 #include "./board_printer.h"
 
-void BoardPrinter::print(GameStatus& s) {
-  int board_size = s.board_size();
+void BoardPrinter::print(std::vector<Field>& fields, int board_size) {
   int indentations = 0;
 
   std::cout << " ";
@@ -13,18 +10,18 @@ void BoardPrinter::print(GameStatus& s) {
   std::cout << std::setw(4) << "(x)";
   std::cout << std::endl;
 
-  for (auto i = s.field_ref().begin(); i < s.field_ref().end(); ++i) {
-    if ((i - s.field_ref().begin()) % board_size != 0) {
+  for (auto i = fields.begin(); i < fields.end(); ++i) {
+    if ((i - fields.begin()) % board_size != 0) {
       std::cout << " - ";
     } else {
-      std::cout << std::setw(3) << (i - s.field_ref().begin()) / board_size + 1 << " ";
+      std::cout << std::setw(3) << (i - fields.begin()) / board_size + 1 << " ";
     }
 
     std::cout << *i;
 
-    if ((i - s.field_ref().begin()) % board_size == board_size - 1 &&
-        (i - s.field_ref().begin()) != board_size * board_size - 1) {
-      this->_newline(board_size, indentations);
+    if ((i - fields.begin()) % board_size == board_size - 1 &&
+        (i - fields.begin()) != board_size * board_size - 1) {
+      BoardPrinter::_newline(board_size, indentations);
     }
   }
 

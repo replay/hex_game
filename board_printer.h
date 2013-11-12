@@ -1,15 +1,18 @@
 #ifndef BOARD_PRINTER_H_
 #define BOARD_PRINTER_H_
 
-#include "./game_status.h"
+#include <iostream>
+#include <iomanip>
+#include <vector>
+
 #include "./field.h"
 
 class BoardPrinter {
   private:
-    void _newline(const int, int&);
+    static void _newline(const int, int&);
 
   public:
-    void print(GameStatus&);
+    static void print(std::vector<Field>&, int);
 };
 
 #endif  // BOARD_PRINTER_H_

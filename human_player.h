@@ -9,9 +9,9 @@ class HumanPlayer: public Player {
     bool _is_numeric(std::string&);
 
   public:
-    HumanPlayer(GameStatus&);
-    HumanPlayer(GameStatus&, const std::string);
-    HumanPlayer(GameStatus&, const char*);
+    HumanPlayer();
+    HumanPlayer(const std::string);
+    HumanPlayer(const char*);
     move_t get_move();
 };
 

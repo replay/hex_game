@@ -1,15 +1,12 @@
 #include "./player.h"
 
-Player::Player(GameStatus& game_status)
-  : _game_status(game_status) {}
+Player::Player() {}
 
-Player::Player(GameStatus& game_status, const std::string player_name)
-  : _game_status(game_status),
-    _player_name(player_name) {}
+Player::Player(const std::string player_name)
+  : _player_name(player_name) {}
 
-Player::Player(GameStatus& game_status, const char* player_name)
-  : _game_status(game_status),
-    _player_name(player_name) {}
+Player::Player(const char* player_name)
+  : _player_name(player_name) {}
 
 void Player::set_color(Field::colors color) {
   this->_color = color;

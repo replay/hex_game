@@ -3,20 +3,18 @@
 
 #include "./types.h"
 #include "./field.h"
-#include "./game_status.h"
 
 class Player {
   private:
     Field::colors _color;
-    GameStatus& _game_status;
 
   protected:
     std::string _player_name;
 
   public:
-    Player(GameStatus&);
-    Player(GameStatus&, const std::string);
-    Player(GameStatus&, const char*);
+    Player();
+    Player(const std::string);
+    Player(const char*);
     virtual move_t get_move()=0;
     void set_color(Field::colors);
     Field::colors get_color();

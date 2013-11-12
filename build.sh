@@ -1,6 +1,6 @@
 #!/bin/bash
 
-MODULES="board_printer game_status hex field player human_player edge_graph main"
+MODULES="board_printer hex field player human_player edge_graph main"
 OUTPUT_NAME="hex"
 COMPILER="g++"
 COMPILE_PARAMS="--std=c++11 -fprofile-arcs -ftest-coverage -c -ggdb"
