@@ -73,26 +73,9 @@ bool HexGame::_next_move(Player& player) {
 
 bool HexGame::_has_winner() {
 
-  /*for (int i = 0; i < this->_board_size; ++i) {
-    for (int j = 0; j < this->_board_size; ++j) {
-      if (this->_edge_graph.find_path(i,
-        (this->_board_size - 1) * this->_board_size + j, Field::colors::BLACK)) {
-        this->_winner = Field::colors::BLACK;
-        return true;
-      }
-    }
-  }
-
-  for (int i = 0; i < this->_board_size; ++i) {
-    for (int j = 0; j < this->_board_size; ++j) {
-      if (this->_edge_graph.find_path(
-        i * this->_board_size, j * this->_board_size + this->_board_size - 1,
-        Field::colors::BLACK)) {
-        this->_winner = Field::colors::BLACK;
-        return true;
-      }
-    }
-  }*/
+  std::pair< std::vector<int>, std::vector<int> > board_edges;
+  HexBoard::get_board_edge_fields(this->_board_size, HexBoard::edge_direction::HORIZONTAL, board_edges);
+  HexBoard::get_board_edge_fields(this->_board_size, HexBoard::edge_direction::VERTICAL, board_edges);
 
   return false;
 }

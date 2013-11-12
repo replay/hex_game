@@ -90,3 +90,25 @@ void HexBoard::_newline(const int board_size, int& indentations) {
   for (int i = 0; i < indentations * 2; ++i)
     std::cout << " ";
 }
+
+void HexBoard::get_board_edge_fields(const int board_size, edge_direction dir,
+  std::pair< std::vector<int>, std::vector<int> >& edges) {
+
+  // initialize for HORIZONTAL
+  int incr = 1;
+  int dst_start = board_size * (board_size - 1);
+
+  // if VERTICAL, then overwrite
+  if (dir == edge_direction::VERTICAL) {
+    dst_start = board_size - 1;
+    incr = board_size;
+  }
+
+  // generate the fields of first edge
+  for (int i = 0; i < incr * board_size; i += incr)
+    edges.first.push_back(i);
+
+  // generate the fields of second edge
+  for (int i = dst_start; i < dst_start + (board_size * incr); i += incr)
+    edges.second.push_back(i);
+}
