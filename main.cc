@@ -1,5 +1,5 @@
-#include "hex.h"
+#include "hex_game.h"
 
 int main(void) {
-  Hex game = Hex();
+  HexGame hex = HexGame();
 }

@@ -10,7 +10,7 @@
 typedef class illegal_move_exception: public std::exception {
 } illegal_move_exception;
 
-class Hex {
+class HexGame {
   private:
     EdgeGraph _edge_graph;
 
@@ -31,8 +31,8 @@ class Hex {
     void _build_paths();
 
   public:
-    Hex(int = 11);
-    ~Hex();
+    HexGame(int = 11);
+    ~HexGame();
 };
 
 #endif  // HEX_H_

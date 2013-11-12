@@ -1,6 +1,6 @@
-#include "./hex.h"
+#include "./hex_game.h"
 
-Hex::Hex(int board_size)
+HexGame::HexGame(int board_size)
   : _board_size(board_size),
   _edge_graph(EdgeGraph(board_size, this->_fields)) {
   if (board_size > 99) {
@@ -34,12 +34,12 @@ Hex::Hex(int board_size)
   }
 }
 
-Hex::~Hex() {
+HexGame::~HexGame() {
   delete this->_player1;
   delete this->_player2;
 }
 
-void Hex::_move(Player& player) {
+void HexGame::_move(Player& player) {
   int fieldnum = this->_move_to_fieldnum(player.get_move());
   while (!this->_set_field(fieldnum, player.get_color())) {
     std::cout << "illegal move, try again" << std::endl;
@@ -47,7 +47,7 @@ void Hex::_move(Player& player) {
   }
 }
 
-int Hex::_move_to_fieldnum(move_t m) {
+int HexGame::_move_to_fieldnum(move_t m) {
   if (m.first >= this->_board_size || m.second >= this->_board_size)
     return -1;
   if (m.first < 0 || m.second < 0)
@@ -55,10 +55,10 @@ int Hex::_move_to_fieldnum(move_t m) {
   return m.second * this->_board_size + m.first;
 }
 
-void Hex::_build_paths() {
+void HexGame::_build_paths() {
 }
 
-bool Hex::_set_field(int field, Field::colors color) {
+bool HexGame::_set_field(int field, Field::colors color) {
   if (field < 0)
     return false;
   if (field >= this->_fields.size())
@@ -71,11 +71,11 @@ bool Hex::_set_field(int field, Field::colors color) {
   return true;
 }
 
-Field::colors Hex::_get_winner() {
+Field::colors HexGame::_get_winner() {
   return this->_winner;
 }
 
-bool Hex::_has_winner() {
+bool HexGame::_has_winner() {
   this->_build_paths();
 
   for (int i = 0; i < this->_board_size; ++i) {
@@ -102,6 +102,6 @@ bool Hex::_has_winner() {
   return false;
 }
 
-bool Hex::_is_finished() {
+bool HexGame::_is_finished() {
   return this->_finished;
 }
