@@ -10,12 +10,14 @@ HexGame::HexGame() {
   this->_players[1] = new HumanPlayer(2, "player2", 'O');
 
   // ask who gets the first move
-  // the one who gets the first move will play west->east
+  // the one who gets the first move will be the first element in the vector 
   if (AsciiArt::who_begins(this->_players[0], this->_players[1]) == 2) {
     player = this->_players[0];
     this->_players[0] = this->_players[1];
     this->_players[1] = player;
   }
+
+  // current player is the first one
   player = this->_players[0];
 
   // set the playing direction for each of the two players
