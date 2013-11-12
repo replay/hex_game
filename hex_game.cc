@@ -15,8 +15,8 @@ HexGame::HexGame() {
     this->_player2->set_board_direction(board_direction::NORTH_SOUTH);
     player = this->_player1;
   } else {
-    this->_player2->set_board_direction(board_direction::WEST_EAST);
     this->_player1->set_board_direction(board_direction::NORTH_SOUTH);
+    this->_player2->set_board_direction(board_direction::WEST_EAST);
     player = this->_player2;
   }
 
