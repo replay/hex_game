@@ -55,7 +55,7 @@ bool HexGame::_next_move(Player& player) {
   // convert two dimensional coordinates into field number
   field = move.second * this->_board_size + move.first;
 
-  // further move validation
+  // more move validation
   if (field < 0)
     return false;
   if (field >= this->_board_size * this->_board_size)

@@ -33,24 +33,8 @@ void HexBoard::print_board(std::vector<Field>& fields, int board_size) {
   std::cout << std::endl;
 }
 
-void HexBoard::_newline(const int board_size, int& indentations) {
-  std::cout << std::endl;
-
-  for (int i = 0; i < indentations * 2; ++i)
-    std::cout << " ";
-  std::cout << "     ";
-
-
-  for (int i = 0; i < board_size - 1; ++i)
-    std::cout << "\\ / ";
-  std::cout << "\\" << std::endl;
-
-  ++indentations;
-
-  for (int i = 0; i < indentations * 2; ++i)
-    std::cout << " ";
-}
-
+// creates a list of all fields that are adjacent to a given field based
+// on the size of the hex board
 void HexBoard::get_adjacent_fields(
   int field, int board_size, std::vector<int>& adjacent_fields) {
   std::vector< std::pair<int, bool> > surrounding_hexagon;
@@ -87,4 +71,22 @@ void HexBoard::get_adjacent_fields(
   for (auto i: surrounding_hexagon)
     if (i.second)
       adjacent_fields.push_back(i.first);
+}
+
+void HexBoard::_newline(const int board_size, int& indentations) {
+  std::cout << std::endl;
+
+  for (int i = 0; i < indentations * 2; ++i)
+    std::cout << " ";
+  std::cout << "     ";
+
+
+  for (int i = 0; i < board_size - 1; ++i)
+    std::cout << "\\ / ";
+  std::cout << "\\" << std::endl;
+
+  ++indentations;
+
+  for (int i = 0; i < indentations * 2; ++i)
+    std::cout << " ";
 }
