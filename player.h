@@ -10,18 +10,18 @@ class Player {
   protected:
     std::string _player_name;
     char _symbol;
+    int _id;
 
   public:
     Player();
-    Player(const std::string);
-    Player(const char*);
-    Player(const std::string, const char);
-    Player(const char*, const char);
+    Player(int, const std::string, const char);
+    Player(int, const char*, const char);
     virtual move_t get_move()=0;
     void set_name(std::string);
     std::string get_name();
     void set_symbol(const char);
     char get_symbol();
+    int get_id();
 };
 
 std::ostream& operator<< (std::ostream&, Player*);

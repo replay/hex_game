@@ -2,19 +2,15 @@
 
 Player::Player() {}
 
-// bunch of constructors with player name and player symbol parameters
-Player::Player(const std::string player_name)
-  : _player_name(player_name) {}
 
-Player::Player(const char* player_name)
-  : _player_name(player_name) {}
-
-Player::Player(const std::string player_name, const char symbol)
-  : _player_name(player_name),
+Player::Player(int id, const std::string player_name, const char symbol)
+  : _id(id),
+    _player_name(player_name),
     _symbol(symbol) {}
 
-Player::Player(const char* player_name, const char symbol)
-  : _player_name(player_name),
+Player::Player(int id, const char* player_name, const char symbol)
+  : _id(id),
+    _player_name(player_name),
     _symbol(symbol) {}
 
 void Player::set_name(std::string name) {
@@ -31,6 +27,10 @@ char Player::get_symbol() {
 
 void Player::set_symbol(const char symbol) {
   this->_symbol = symbol;
+}
+
+int Player::get_id() {
+  return this->_id;
 }
 
 std::ostream& operator<< (std::ostream& os, Player* player) {

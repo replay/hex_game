@@ -4,16 +4,16 @@
 #include <iostream>
 #include "./player.h"
 
+
+// this class represents a user player on the console
 class HumanPlayer: public Player {
   private:
     bool _is_numeric(std::string&);
 
   public:
     HumanPlayer();
-    HumanPlayer(const std::string);
-    HumanPlayer(const char*);
-    HumanPlayer(const std::string, const char);
-    HumanPlayer(const char*, const char);
+    HumanPlayer(int, const std::string, const char);
+    HumanPlayer(int, const char*, const char);
     move_t get_move();
 };
 

@@ -89,6 +89,6 @@ void AsciiArt::print_players_move(Player* player, move_t move) {
   std::cout << std::endl;
   AsciiArt::horizontal_line();
   std::cout << "\"" << player << "\" played " <<
-    move.first << ":" << move.second << std::endl;
+    move.first + 1 << ":" << move.second + 1 << std::endl;
   AsciiArt::horizontal_line();
 }

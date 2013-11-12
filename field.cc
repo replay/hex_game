@@ -1,22 +1,25 @@
 #include "./field.h"
 
 Field::Field() {
-  this->_symbol = '.';
-  this->_empty = true;
 }
 
-void Field::set_symbol(char symbol) {
+void Field::use_field(int player, char symbol) {
   this->_symbol = symbol;
-  std::cout << "field set to not empty " << std::endl;
-  this->_empty = false;
+  this->_owner = player;
 }
 
 char Field::get_symbol() {
   return this->_symbol;
 }
 
+int Field::get_owner() {
+  return this->_owner;
+}
+
 bool Field::is_empty() {
-  return this->_empty;
+  if (this->_owner == 0)
+    return true;
+  return false;
 }
 
 std::ostream& operator<< (std::ostream& os, Field& field) {

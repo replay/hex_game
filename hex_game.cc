@@ -5,8 +5,8 @@ HexGame::HexGame() {
   Player* player;
 
   // create the players
-  this->_player1 = new HumanPlayer("player1", 'X');
-  this->_player2 = new HumanPlayer("player2", 'O');
+  this->_player1 = new HumanPlayer(1, "player1", 'X');
+  this->_player2 = new HumanPlayer(2, "player2", 'O');
 
   // ask who gets the first move
   if (AsciiArt::who_begins(this->_player1, this->_player2) == 1)
@@ -68,10 +68,10 @@ bool HexGame::_next_move(Player& player) {
   }
 
   // update the board field
-  this->_fields[field].set_symbol(player.get_symbol());
+  this->_fields[field].use_field(player.get_id(), player.get_symbol());
 
   // create the according edges in the graph
-  this->_edge_graph->update_edges(field, &player);
+  this->_edge_graph->update_edges(field, player.get_id());
 
   // print the move to the console with some ascii art
   AsciiArt::print_players_move(&player, move);

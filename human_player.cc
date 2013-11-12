@@ -7,18 +7,11 @@ HumanPlayer::HumanPlayer()
 }
 
 
-// bunch of constructors with player name and player symbol parameters
-HumanPlayer::HumanPlayer(const std::string player_name)
-  : Player(player_name) {}
+HumanPlayer::HumanPlayer(int id, const std::string player_name, const char symbol)
+  : Player(id, player_name, symbol) {}
 
-HumanPlayer::HumanPlayer(const char* player_name)
-  : Player(player_name) {}
-
-HumanPlayer::HumanPlayer(const std::string player_name, const char symbol)
-  : Player(player_name, symbol) {}
-
-HumanPlayer::HumanPlayer(const char* player_name, const char symbol)
-  : Player(player_name, symbol) {}
+HumanPlayer::HumanPlayer(int id, const char* player_name, const char symbol)
+  : Player(id, player_name, symbol) {}
 
 
 // ask the player for his next move

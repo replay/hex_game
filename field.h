@@ -7,13 +7,14 @@ class Field {
 
   public:
     Field();
-    void set_symbol(char);
+    void use_field(int, char);
     char get_symbol();
+    int get_owner();
     bool is_empty();
 
   private:
-    bool _empty;
-    char _symbol;
+    int _owner = 0;
+    char _symbol = '.';
 };
 
 std::ostream& operator<< (std::ostream&, Field&);

@@ -12,11 +12,11 @@ class EdgeGraph {
   private:
     const int _board_size;
     std::vector<Field>& _fields;
-    std::map<Player*, std::map< int, std::vector< int > > > _edges;
+    std::map<int, std::map< int, std::vector< int > > > _edges;
 
   public:
     EdgeGraph(const int, std::vector<Field>&);
-    void update_edges(int, Player*);
+    void update_edges(int, int);
 };
 
 #endif  // EDGE_GRAPH_H_
