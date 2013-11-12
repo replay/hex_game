@@ -68,20 +68,20 @@ void AsciiArt::banner(Player* p1, Player* p2) {
   AsciiArt::three_columns("*",
     std::string("ITEM"),
     std::string("SYMBOL"),
-    std::string("NOTES"));
+    std::string("DIRECTION"));
   AsciiArt::horizontal_line("*");
   AsciiArt::three_columns("*",
-    std::string("EMPTY FIELD"),
+    std::string("empty field"),
     std::string("."),
     std::string(""));
   AsciiArt::three_columns("*",
     p1->get_name(),
     std::string(1, p1->get_symbol()),
-    direction_string.at(board_direction::WEST_EAST));
+    direction_string.at(p1->get_board_direction()));
   AsciiArt::three_columns("*",
     p2->get_name(),
     std::string(1, p2->get_symbol()),
-    direction_string.at(board_direction::NORTH_SOUTH));
+    direction_string.at(p2->get_board_direction()));
   AsciiArt::horizontal_line("*");
 }
 
