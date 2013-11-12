@@ -4,6 +4,8 @@
 #include "./types.h"
 #include "./field.h"
 
+// this is the abstract base class for a player
+// it should be extended to be a human or a computer player
 class Player {
   protected:
     std::string _player_name;

@@ -6,6 +6,8 @@ HumanPlayer::HumanPlayer()
   std::cin >> this->_player_name;
 }
 
+
+// bunch of constructors with player name and player symbol parameters
 HumanPlayer::HumanPlayer(const std::string player_name)
   : Player(player_name) {}
 
@@ -18,6 +20,8 @@ HumanPlayer::HumanPlayer(const std::string player_name, const char symbol)
 HumanPlayer::HumanPlayer(const char* player_name, const char symbol)
   : Player(player_name, symbol) {}
 
+
+// ask the player for his next move
 move_t HumanPlayer::get_move() {
   int x, y;
   std::string user_input("");
@@ -39,6 +43,8 @@ move_t HumanPlayer::get_move() {
   return move_t(x, y);
 }
 
+
+// check if user's input is numeric
 bool HumanPlayer::_is_numeric(std::string& s) {
   std::string::const_iterator i = s.begin();
   while (i != s.end() && std::isdigit(*i)) ++i;

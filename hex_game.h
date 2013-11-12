@@ -11,7 +11,6 @@
 class HexGame {
   private:
     EdgeGraph* _edge_graph;
-
     Player* _player1;
     Player* _player2;
 

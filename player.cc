@@ -2,6 +2,7 @@
 
 Player::Player() {}
 
+// bunch of constructors with player name and player symbol parameters
 Player::Player(const std::string player_name)
   : _player_name(player_name) {}
 
