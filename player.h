@@ -8,6 +8,7 @@
 // it should be extended to be a human or a computer player
 class Player {
   protected:
+    std::pair<int, int> _src_dst;
     std::string _player_name;
     board_direction _board_direction;
     char _symbol;
@@ -25,6 +26,8 @@ class Player {
     board_direction get_board_direction();
     char get_symbol();
     int get_id();
+    void set_src_dst_nodes(std::pair<int, int>);
+    std::pair<int, int> get_src_dst_nodes();
 };
 
 std::ostream& operator<< (std::ostream&, Player*);

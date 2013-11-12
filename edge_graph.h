@@ -17,6 +17,7 @@ class EdgeGraph {
   public:
     EdgeGraph(const int, std::vector<Field>&);
     void update_edges(int, int);
+    void add_edge(int, int, int);
 };
 
 #endif  // EDGE_GRAPH_H_

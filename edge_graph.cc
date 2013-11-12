@@ -15,3 +15,8 @@ void EdgeGraph::update_edges(int field, int player) {
       _edges[player][i].push_back( field );
     }
 }
+
+void EdgeGraph::add_edge(int player, int f1, int f2) {
+  this->_edges[player][f1].push_back(f2);
+  this->_edges[player][f2].push_back(f1);
+}

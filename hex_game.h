@@ -2,6 +2,7 @@
 #define HEX_H_
 
 #include <iostream>
+#include <vector>
 
 #include "./types.h"
 #include "./ascii_art.h"
@@ -12,8 +13,7 @@
 class HexGame {
   private:
     EdgeGraph* _edge_graph;
-    Player* _player1;
-    Player* _player2;
+    std::vector<Player*> _players;
 
     std::vector<Field> _fields;
     bool _finished = false;
@@ -21,6 +21,7 @@ class HexGame {
 
     bool _next_move(Player&);
     bool _has_winner();
+    void _create_player_src_dst_nodes();
 
   public:
     HexGame();

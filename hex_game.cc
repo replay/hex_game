@@ -5,19 +5,20 @@ HexGame::HexGame() {
   Player* player;
 
   // create the players
-  this->_player1 = new HumanPlayer(1, "player1", 'X');
-  this->_player2 = new HumanPlayer(2, "player2", 'O');
+  this->_players.resize(2);
+  this->_players[0] = new HumanPlayer(1, "player1", 'X');
+  this->_players[1] = new HumanPlayer(2, "player2", 'O');
 
   // ask who gets the first move
   // the one who gets the first move will play west->east
-  if (AsciiArt::who_begins(this->_player1, this->_player2) == 1) {
-    this->_player1->set_board_direction(board_direction::WEST_EAST);
-    this->_player2->set_board_direction(board_direction::NORTH_SOUTH);
-    player = this->_player1;
+  if (AsciiArt::who_begins(this->_players[0], this->_players[1]) == 1) {
+    this->_players[0]->set_board_direction(board_direction::WEST_EAST);
+    this->_players[1]->set_board_direction(board_direction::NORTH_SOUTH);
+    player = this->_players[0];
   } else {
-    this->_player1->set_board_direction(board_direction::NORTH_SOUTH);
-    this->_player2->set_board_direction(board_direction::WEST_EAST);
-    player = this->_player2;
+    this->_players[0]->set_board_direction(board_direction::NORTH_SOUTH);
+    this->_players[1]->set_board_direction(board_direction::WEST_EAST);
+    player = this->_players[1];
   }
 
   // let player choose the board size and initialize storage accordingly
@@ -25,8 +26,12 @@ HexGame::HexGame() {
   this->_fields.resize(this->_board_size * this->_board_size);
   this->_edge_graph = new EdgeGraph(this->_board_size, this->_fields);
 
+  // this creates two virtual fields for each player that are
+  // used to check if a player has a path across the board
+  this->_create_player_src_dst_nodes();
+
   // welcome banner and symbol legend
-  AsciiArt::banner(this->_player1, this->_player2);
+  AsciiArt::banner(this->_players[0], this->_players[1]);
 
   // keep playing until there is a winner
   while (!this->_has_winner()) {
@@ -39,14 +44,14 @@ HexGame::HexGame() {
     }
 
     // switch the current player
-    player = (player == this->_player1 ? this->_player2 : this->_player1);
+    player = (player == this->_players[0] ? this->_players[1] : this->_players[0]);
   }
 }
 
 
 HexGame::~HexGame() {
-  delete this->_player1;
-  delete this->_player2;
+  delete this->_players[0];
+  delete this->_players[1];
   delete this->_edge_graph;
 }
 
@@ -94,3 +99,31 @@ bool HexGame::_has_winner() {
 
   return false;
 }
+
+// creates 4 virtual nodes at the end of _board_size * _board_size to be used
+// as virtual nodes that each player has to connect to win the game
+void HexGame::_create_player_src_dst_nodes() {
+  Player* player;
+  for (int i = 0; i < 2; ++i)
+    this->_players[i]->set_src_dst_nodes(std::pair<int, int>(
+      this->_board_size * this->_board_size + 1 + i * 2,
+      this->_board_size * this->_board_size + 2 + i * 2));
+
+  for (auto player: this->_players) {
+    std::pair< std::vector<int>, std::vector<int> > board_edge_nodes;
+
+    // get the board edge fields for the current player's playing direction
+    HexBoard::get_board_edge_fields(
+        this->_board_size, player->get_board_direction(), board_edge_nodes);
+
+    // connect all the board edge nodes to the current player's virtual node
+    for (auto i: board_edge_nodes.first)
+      this->_edge_graph->add_edge(player->get_id(), player->get_src_dst_nodes().first, i);
+    for (auto i: board_edge_nodes.second)
+      this->_edge_graph->add_edge(player->get_id(), player->get_src_dst_nodes().second, i);
+  }
+}
+
+
+
+

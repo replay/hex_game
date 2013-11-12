@@ -41,6 +41,14 @@ int Player::get_id() {
   return this->_id;
 }
 
+void Player::set_src_dst_nodes(std::pair<int, int> src_dst) {
+  this->_src_dst = src_dst;
+}
+
+std::pair<int, int> Player::get_src_dst_nodes() {
+  return this->_src_dst;
+}
+
 std::ostream& operator<< (std::ostream& os, Player* player) {
   return os << player->get_name();
 }
