@@ -1,25 +1,24 @@
 #include "./field.h"
 
 Field::Field() {
-  this->_color = colors::EMPTY;
+  this->_symbol = '.';
+  this->_empty = true;
 }
 
-Field::colors Field::get_color() {
-  return this->_color;
+void Field::set_symbol(char symbol) {
+  this->_symbol = symbol;
+  std::cout << "field set to not empty " << std::endl;
+  this->_empty = false;
 }
 
-void Field::set_color(Field::colors color) {
-  this->_color = color;
+char Field::get_symbol() {
+  return this->_symbol;
+}
+
+bool Field::is_empty() {
+  return this->_empty;
 }
 
 std::ostream& operator<< (std::ostream& os, Field& field) {
-  switch (field.get_color()) {
-    case Field::colors::EMPTY:
-      return os << ".";
-    case Field::colors::WHITE:
-      return os << "X";
-    case Field::colors::BLACK:
-      return os << "O";
-  }
-  return os;
+  return os << field.get_symbol();
 }

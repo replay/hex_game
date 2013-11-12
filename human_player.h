@@ -12,6 +12,8 @@ class HumanPlayer: public Player {
     HumanPlayer();
     HumanPlayer(const std::string);
     HumanPlayer(const char*);
+    HumanPlayer(const std::string, const char);
+    HumanPlayer(const char*, const char);
     move_t get_move();
 };
 

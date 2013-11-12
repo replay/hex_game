@@ -12,11 +12,17 @@ HumanPlayer::HumanPlayer(const std::string player_name)
 HumanPlayer::HumanPlayer(const char* player_name)
   : Player(player_name) {}
 
+HumanPlayer::HumanPlayer(const std::string player_name, const char symbol)
+  : Player(player_name, symbol) {}
+
+HumanPlayer::HumanPlayer(const char* player_name, const char symbol)
+  : Player(player_name, symbol) {}
+
 move_t HumanPlayer::get_move() {
   int x, y;
   std::string user_input("");
 
-  std::cout << "enter the coordinates of your next move: " << std::endl;
+  //std::cout << "enter the coordinates of your next move: " << std::endl;
   while (!this->_is_numeric(user_input)) {
     std::cout << "x: ";
     std::cin >> user_input;

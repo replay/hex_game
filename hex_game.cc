@@ -1,38 +1,37 @@
 #include "./hex_game.h"
 
-HexGame::HexGame(int board_size)
-  : _board_size(board_size),
-  _edge_graph(EdgeGraph(board_size, this->_fields)) {
-
-  if (board_size > 99) {
-    std::cerr << "board size can't be bigger than 99x99" << std::endl;
-    return;
-  }
+HexGame::HexGame() {
+  Player* player;
 
   // create the players
-  this->_player1 = new HumanPlayer("the whit0r");
-  this->_player1->set_color(Field::colors::BLACK);
-  this->_player2 = new HumanPlayer("another one");
-  this->_player2->set_color(Field::colors::WHITE);
+  this->_player1 = new HumanPlayer("player1", 'X');
+  this->_player2 = new HumanPlayer("player2", 'O');
+  if (AsciiArt::who_begins(this->_player1, this->_player2) == 1)
+    player = this->_player1;
+  else
+    player = this->_player2;
 
-  // start with player1
-  Player* player = this->_player1;
+  this->_board_size = AsciiArt::choose_board_size();
 
   this->_fields.resize(this->_board_size * this->_board_size);
+
+  this->_edge_graph = new EdgeGraph(this->_board_size, this->_fields);
+
+  AsciiArt::banner(this->_player1, this->_player2);
 
   // keep playing until there is a winner
   while (!this->_has_winner()) {
     HexBoard::print_board(this->_fields, this->_board_size);
 
+    std::cout << player << "'s turn:" << std::endl;
+    while (!this->_next_move(*player)) {
+      std::cout << "illegal move, try again" << std::endl;
+    }
+
     if (player == this->_player1) {
       player = this->_player2;
     } else {
       player = this->_player1;
-    }
-
-    std::cout << player << "'s turn" << std::endl;
-    while (!this->_next_move(*player)) {
-      std::cout << "illegal move, try again" << std::endl;
     }
   }
 }
@@ -62,11 +61,14 @@ bool HexGame::_next_move(Player& player) {
     return false;
 
   // check if field is still empty
-  if (this->_fields[field].get_color() != Field::colors::EMPTY)
+  if (!this->_fields[field].is_empty()) {
     return false;
+  }
 
-  this->_fields[field].set_color(player.get_color());
-  this->_edge_graph.update_edges(field, player.get_color());
+  this->_fields[field].set_symbol(player.get_symbol());
+  this->_edge_graph->update_edges(field, &player);
+
+  AsciiArt::print_players_move(&player, move);
 
   return true;
 }
@@ -74,8 +76,9 @@ bool HexGame::_next_move(Player& player) {
 bool HexGame::_has_winner() {
 
   std::pair< std::vector<int>, std::vector<int> > board_edges;
-  HexBoard::get_board_edge_fields(this->_board_size, HexBoard::edge_direction::HORIZONTAL, board_edges);
-  HexBoard::get_board_edge_fields(this->_board_size, HexBoard::edge_direction::VERTICAL, board_edges);
+
+  //HexBoard::get_board_edge_fields(this->_board_size, HexBoard::edge_direction::HORIZONTAL, board_edges);
+  //HexBoard::get_board_edge_fields(this->_board_size, HexBoard::edge_direction::VERTICAL, board_edges);
 
   return false;
 }

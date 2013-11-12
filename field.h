@@ -6,13 +6,14 @@
 class Field {
 
   public:
-    enum colors { EMPTY, WHITE, BLACK };
     Field();
-    colors get_color();
-    void set_color(Field::colors);
+    void set_symbol(char);
+    char get_symbol();
+    bool is_empty();
 
   private:
-    Field::colors _color;
+    bool _empty;
+    char _symbol;
 };
 
 std::ostream& operator<< (std::ostream&, Field&);

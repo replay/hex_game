@@ -5,21 +5,21 @@
 #include "./field.h"
 
 class Player {
-  private:
-    Field::colors _color;
-
   protected:
     std::string _player_name;
+    char _symbol;
 
   public:
     Player();
     Player(const std::string);
     Player(const char*);
+    Player(const std::string, const char);
+    Player(const char*, const char);
     virtual move_t get_move()=0;
-    void set_color(Field::colors);
-    Field::colors get_color();
-    void set_player_name(std::string);
-    std::string get_player_name();
+    void set_name(std::string);
+    std::string get_name();
+    void set_symbol(const char);
+    char get_symbol();
 };
 
 std::ostream& operator<< (std::ostream&, Player*);

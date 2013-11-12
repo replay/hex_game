@@ -6,18 +6,17 @@
 
 #include "./hex_board.h"
 #include "./field.h"
+#include "./player.h"
 
 class EdgeGraph {
   private:
     const int _board_size;
     std::vector<Field>& _fields;
-    std::map<Field::colors, std::map< int, std::vector< int > > > _edges;
-    void _add_edges(int, int, Field::colors);
+    std::map<Player*, std::map< int, std::vector< int > > > _edges;
 
   public:
     EdgeGraph(const int, std::vector<Field>&);
-    void update_edges(int, Field::colors);
-    bool find_path(int, int, Field::colors);
+    void update_edges(int, Player*);
 };
 
 #endif  // EDGE_GRAPH_H_
