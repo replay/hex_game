@@ -2,6 +2,7 @@
 #define HEX_H_
 
 #include <iostream>
+#include <algorithm>
 #include <vector>
 
 #include "./types.h"

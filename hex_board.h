@@ -5,7 +5,6 @@
 #include <iomanip>
 #include <vector>
 
-#include "./field.h"
 #include "./types.h"
 
 class HexBoard {
@@ -13,7 +12,7 @@ class HexBoard {
     static void _newline(const int, int&);
 
   public:
-    static void print_board(std::vector<Field>&, int);
+    static void print_board(std::vector<char*>&, int);
     static void get_adjacent_fields(int, int, std::vector<int>&);
     static void get_board_edge_fields(const int, board_direction,
       std::pair< std::vector<int>, std::vector<int> >&);

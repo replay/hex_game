@@ -3,6 +3,7 @@
 
 HexGame::HexGame() {
   Player* player;
+  std::vector<char*> board_symbols;
 
   // create the players
   this->_players.resize(2);
@@ -28,6 +29,11 @@ HexGame::HexGame() {
   this->_board_size = AsciiArt::choose_board_size();
   this->_fields.resize(this->_board_size * this->_board_size);
   this->_edge_graph = new EdgeGraph(this->_board_size, this->_fields);
+  board_symbols.resize(this->_board_size * this->_board_size);
+
+  // create a list of pointers to the symbols of each field on the board
+  std::transform (this->_fields.begin(), this->_fields.end(),
+      board_symbols.begin(), [] (Field& f) { return f.get_symref(); });
 
   // this creates two virtual fields for each player that are
   // used to check if a player has a path across the board
@@ -38,7 +44,7 @@ HexGame::HexGame() {
 
   // keep playing until there is a winner
   while (!this->_has_winner()) {
-    HexBoard::print_board(this->_fields, this->_board_size);
+    HexBoard::print_board(board_symbols, this->_board_size);
 
     // ask player for the next move
     std::cout << player << "'s turn:" << std::endl;
@@ -137,7 +143,3 @@ void HexGame::_create_player_src_dst_nodes() {
       this->_edge_graph->add_edge(player->get_id(), player->get_src_dst_nodes().second, i);
   }
 }
-
-
-
-

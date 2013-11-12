@@ -2,7 +2,7 @@
 
 
 // print the hex board in ascii art
-void HexBoard::print_board(std::vector<Field>& fields, int board_size) {
+void HexBoard::print_board(std::vector<char*>& fields, int board_size) {
   int indentations = 0;
 
   std::cout << " ";

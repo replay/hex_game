@@ -8,7 +8,7 @@ class Field {
   public:
     Field();
     void use_field(int, char);
-    char get_symbol();
+    char* get_symref();
     int get_owner();
     bool is_empty();
 
