@@ -51,9 +51,9 @@ void HexBoard::_newline(const int board_size, int& indentations) {
     std::cout << " ";
 }
 
-std::vector<int> HexBoard::get_adjacent_fields(int field, int board_size) {
+void HexBoard::get_adjacent_fields(
+  int field, int board_size, std::vector<int>& adjacent_fields) {
   std::vector< std::pair<int, bool> > surrounding_hexagon;
-  std::vector<int> adjacent_fields;
 
   // adding all possible neighbours to surrounding_hexagon
   surrounding_hexagon.push_back(std::pair<int, bool>(field - board_size, true));
@@ -87,6 +87,4 @@ std::vector<int> HexBoard::get_adjacent_fields(int field, int board_size) {
   for (auto i: surrounding_hexagon)
     if (i.second)
       adjacent_fields.push_back(i.first);
-
-  return adjacent_fields;
 }

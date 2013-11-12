@@ -9,7 +9,7 @@ bool EdgeGraph::find_path(int src, int dst, Field::colors color) {}
 void EdgeGraph::update_edges(int field, Field::colors color) {
   std::vector<int> adjacent_fields;
   
-  adjacent_fields = HexBoard::get_adjacent_fields(field, this->_board_size);
+  HexBoard::get_adjacent_fields(field, this->_board_size, adjacent_fields);
 
   for (auto i: adjacent_fields)
     if (_fields[i].get_color() == color)

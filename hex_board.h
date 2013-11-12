@@ -13,7 +13,7 @@ class HexBoard {
 
   public:
     static void print_board(std::vector<Field>&, int);
-    static std::vector<int> get_adjacent_fields(int, int);
+    static void get_adjacent_fields(int, int, std::vector<int>&);
 };
 
 #endif  // BOARD_PRINTER_H_
