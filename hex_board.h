@@ -7,7 +7,7 @@
 
 #include "./field.h"
 
-class BoardPrinter {
+class HexBoard {
   private:
     static void _newline(const int, int&);
 

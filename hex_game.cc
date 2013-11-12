@@ -20,7 +20,7 @@ HexGame::HexGame(int board_size)
 
   for (int i = 0; !this->_is_finished(); ++i) {
     //this->_board_printer.print(this);
-    BoardPrinter::print(this->_fields, this->_board_size);
+    HexBoard::print(this->_fields, this->_board_size);
 
     if (i % 2 == 0) {
       player = this->_player1;

@@ -1,6 +1,6 @@
-#include "./board_printer.h"
+#include "./hex_board.h"
 
-void BoardPrinter::print(std::vector<Field>& fields, int board_size) {
+void HexBoard::print(std::vector<Field>& fields, int board_size) {
   int indentations = 0;
 
   std::cout << " ";
@@ -21,7 +21,7 @@ void BoardPrinter::print(std::vector<Field>& fields, int board_size) {
 
     if ((i - fields.begin()) % board_size == board_size - 1 &&
         (i - fields.begin()) != board_size * board_size - 1) {
-      BoardPrinter::_newline(board_size, indentations);
+      HexBoard::_newline(board_size, indentations);
     }
   }
 
@@ -33,7 +33,7 @@ void BoardPrinter::print(std::vector<Field>& fields, int board_size) {
   std::cout << std::endl;
 }
 
-void BoardPrinter::_newline(const int board_size, int& indentations) {
+void HexBoard::_newline(const int board_size, int& indentations) {
   std::cout << std::endl;
 
   for (int i = 0; i < indentations * 2; ++i)

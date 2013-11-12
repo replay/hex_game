@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "./board_printer.h"
+#include "./hex_board.h"
 #include "./edge_graph.h"
 #include "./human_player.h"
 
