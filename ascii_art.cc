@@ -43,20 +43,23 @@ int AsciiArt::choose_board_size() {
 
   std::cout << "choose your board size" << std::endl;
   while (choice <= 0 || choice > 4) {
-    std::cout << "1) : 7x7" << std::endl;
-    std::cout << "2) : 11x11" << std::endl;
-    std::cout << "3) : 13x13" << std::endl;
-    std::cout << "4) : 17x17" << std::endl;
+    std::cout << "1) : 4x4" << std::endl;
+    std::cout << "2) : 7x7" << std::endl;
+    std::cout << "3) : 11x11" << std::endl;
+    std::cout << "4) : 13x13" << std::endl;
+    std::cout << "5) : 17x17" << std::endl;
     std::cin >> choice;
   }
   switch (choice) {
     case 1:
-      return 7;
+      return 4;
     case 2:
-      return 11;
+      return 7;
     case 3:
-      return 13;
+      return 11;
     case 4:
+      return 13;
+    case 5:
       return 17;
   }
 }

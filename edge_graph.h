@@ -11,9 +11,9 @@
 class EdgeGraph {
   private:
     const int _board_size;
-    edge_list_t _edges;
 
-    void _compute_reachable(int, int, std::vector<bool>&);
+    // one vector of edges for each player
+    edge_list_t _edges;
 
   public:
     EdgeGraph(const int);

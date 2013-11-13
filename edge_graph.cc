@@ -23,28 +23,16 @@ void EdgeGraph::add_edge(int player, int f1, int f2) {
 bool EdgeGraph::fields_are_connected(int player, std::pair<int, int> src_dst) {
   std::vector<bool> reachable(this->_board_size, false);
 
-  // compute all fields that are reachable from src
-  this->_compute_reachable(player, src_dst.first, reachable);
-
-  // if dst is reachable we have found a winner
-  if (reachable[src_dst.second])
-    return true;
-
-  return false;
-}
-
-
-// compute all paths starting from src
-void EdgeGraph::_compute_reachable(int player, int src, std::vector<bool>& reachable) {
+  // list of fields that should be visited
   std::list<int> checklist;
 
   // start with src
-  checklist.push_back(src);
+  checklist.push_back(src_dst.first);
 
-  // iterate over checklist while all connected
-  // nodes are being appended at the end of it
-  for (auto i: checklist) {
-    for (auto j: this->_edges[player][i]) {
+  // iterate over the fields in checklist while all
+  // connected nodes are being appended at the end of it
+  for (auto i: checklist)
+    for (auto j: this->_edges[player][i])
       if (!reachable[j])
       {
         // this node should be checked next
@@ -53,7 +41,10 @@ void EdgeGraph::_compute_reachable(int player, int src, std::vector<bool>& reach
         // we know this node is reachable and we don't need to check it anymore
         reachable[j] = true;
       }
-    }
-  }
-}
 
+  // if dst is reachable we have found a winner
+  if (reachable[src_dst.second])
+    return true;
+
+  return false;
+}
