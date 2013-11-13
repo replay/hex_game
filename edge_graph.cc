@@ -1,17 +1,14 @@
 #include "./edge_graph.h"
 
-EdgeGraph::EdgeGraph(const int board_size, std::vector<Field>& fields)
-  : _board_size(board_size),
-    _fields(fields) {}
+EdgeGraph::EdgeGraph(const int board_size)
+  : _board_size(board_size){}
 
-void EdgeGraph::update_edges(int field, int player,
-  std::vector<int>& adjacent_fields) {
+void EdgeGraph::add_edges(int player, int src_f,
+  std::vector<int>& connect_fields) {
   
-  for (auto i: adjacent_fields)
-    if (_fields[i].get_owner() == player) {
-      _edges[player][field].push_back( i );
-      _edges[player][i].push_back( field );
-    }
+  for (auto i: connect_fields) {
+    this->add_edge(player, src_f, i);
+  }
 }
 
 void EdgeGraph::add_edge(int player, int f1, int f2) {

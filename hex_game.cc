@@ -28,7 +28,7 @@ HexGame::HexGame() {
   // let player choose the board size and initialize storage accordingly
   this->_board_size = AsciiArt::choose_board_size();
   this->_fields.resize(this->_board_size * this->_board_size);
-  this->_edge_graph = new EdgeGraph(this->_board_size, this->_fields);
+  this->_edge_graph = new EdgeGraph(this->_board_size);
   board_symbols.resize(this->_board_size * this->_board_size);
 
   // create a list of pointers to the symbols of each field on the board
@@ -72,7 +72,7 @@ HexGame::~HexGame() {
 
 
 bool HexGame::_next_move(Player& player) {
-  std::vector<int> adjacent_fields;
+  std::vector<int> adjacent_fields, adjacent_fields_of_player;
   int field;
   move_t move = player.get_move();
 
@@ -99,7 +99,19 @@ bool HexGame::_next_move(Player& player) {
 
   // create the according edges in the graph
   HexBoard::get_adjacent_fields(field, this->_board_size, adjacent_fields);
-  this->_edge_graph->update_edges(field, player.get_id(), adjacent_fields);
+
+  // max size of adjacent_fields_of_player is the size of adjacent_fields
+  adjacent_fields_of_player.resize(adjacent_fields.size());
+
+  // copy indexes of fields that belong to player to adjacent_fields_of_player
+  std::copy_if(adjacent_fields.begin(), adjacent_fields.end(),
+    adjacent_fields_of_player.begin(),
+    [&](int i) { return this->_fields[i].get_owner() == player.get_id();}
+  );
+
+  // add edges to all fields that are adjacent and belong to player
+  this->_edge_graph->add_edges(
+    field, player.get_id(), adjacent_fields_of_player);
 
   // print the move to the console with some ascii art
   AsciiArt::print_players_move(&player, move);

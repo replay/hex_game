@@ -4,8 +4,12 @@
 #include <utility>
 #include <map>
 #include <iostream>
+#include <vector>
 
 typedef std::pair<int, int> move_t;
+
+typedef std::map< int, std::vector< int > > edge_t;
+typedef std::map< int, edge_t > edge_list_t;
 
 enum class board_direction: short {WEST_EAST, NORTH_SOUTH};
 

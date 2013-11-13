@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "./types.h"
+#include "./field.h"
 #include "./ascii_art.h"
 #include "./hex_board.h"
 #include "./edge_graph.h"
