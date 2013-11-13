@@ -6,11 +6,16 @@
 #include <iostream>
 #include <vector>
 
+// coordinates of a move that's give by a player
 typedef std::pair<int, int> move_t;
 
+// an edge in the graph
 typedef std::map< int, std::vector< int > > edge_t;
+
+// map of edges, first int is to select the player
 typedef std::map< int, edge_t > edge_list_t;
 
+// defines the direction in which a player has to create a path
 enum class board_direction: short {WEST_EAST, NORTH_SOUTH};
 
 // map the directions to strings
