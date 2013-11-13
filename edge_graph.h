@@ -4,6 +4,7 @@
 #include <list>
 #include <map>
 #include <utility>
+#include <algorithm>
 
 #include "./types.h"
 
@@ -12,11 +13,13 @@ class EdgeGraph {
     const int _board_size;
     edge_list_t _edges;
 
+    void _compute_reachable(int, int, std::vector<bool>&);
+
   public:
     EdgeGraph(const int);
     void add_edge(int, int, int);
     void add_edges(int, int, std::list<int>&);
-    bool fields_are_connected(std::pair<int, int>);
+    bool fields_are_connected(int, std::pair<int, int>);
 
 };
 
