@@ -59,6 +59,7 @@ HexGame::HexGame() {
     player->get_src_dst_nodes()));
 
   // here should be some "yay" for the winner
+  AsciiArt::announce_winner(player->get_name());
 }
 
 

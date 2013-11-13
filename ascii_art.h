@@ -16,6 +16,7 @@ class AsciiArt {
     static int who_begins(Player*, Player*);
     static int choose_board_size();
     static void print_players_move(Player*, move_t);
+    static void announce_winner(std::string);
 };
 
 #endif  // ASCII_ART_

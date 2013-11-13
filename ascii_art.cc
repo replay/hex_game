@@ -42,7 +42,7 @@ int AsciiArt::choose_board_size() {
   AsciiArt::horizontal_line();
 
   std::cout << "choose your board size" << std::endl;
-  while (choice <= 0 || choice > 4) {
+  while (choice <= 0 || choice > 5) {
     std::cout << "1) : 4x4" << std::endl;
     std::cout << "2) : 7x7" << std::endl;
     std::cout << "3) : 11x11" << std::endl;
@@ -94,4 +94,28 @@ void AsciiArt::print_players_move(Player* player, move_t move) {
   std::cout << "\"" << player << "\" played " <<
     move.first + 1 << ":" << move.second + 1 << std::endl;
   AsciiArt::horizontal_line();
+}
+
+void AsciiArt::announce_winner(std::string winner) {
+  int msg_len = 78 - 15 - winner.size();
+
+  AsciiArt::horizontal_line("+");
+  std::cout << "+";
+  for (int i = 0; i < 78; ++i)
+    std::cout << " ";
+  std::cout << "+" << std::endl;
+  std::cout << "+";
+  for (int i = 0; i < msg_len / 2; ++i)
+    std::cout << " ";
+  std::cout << "the winner is: " << winner;
+  if (msg_len % 2 == 1)
+    std::cout << " ";
+  for (int i = 0; i < msg_len / 2; ++i)
+    std::cout << " ";
+  std::cout << "+" << std::endl;
+  std::cout << "+";
+  for (int i = 0; i < 78; ++i)
+    std::cout << " ";
+  std::cout << "+" << std::endl;
+  AsciiArt::horizontal_line("+");
 }
