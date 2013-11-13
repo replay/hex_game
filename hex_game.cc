@@ -42,8 +42,10 @@ HexGame::HexGame() {
   // welcome banner and symbol legend
   AsciiArt::banner(this->_players[0], this->_players[1]);
 
-  // keep playing until there is a winner
-  while (this->_get_winner() == NULL) {
+  // keep playing until a winner is found
+  while (!this->_edge_graph->fields_are_connected(
+    player->get_src_dst_nodes())) {
+
     HexBoard::print_board(board_symbols, this->_board_size);
 
     // ask player for the next move
@@ -126,16 +128,6 @@ bool HexGame::_verify_move(move_t& m, int& field) {
   return true; 
 }
 
-
-Player* HexGame::_get_winner() {
-  std::pair< std::vector<int>, std::vector<int> > board_edges;
-
-  for (auto player: this->_players)
-    if (this->_edge_graph->fields_are_connected(player->get_src_dst_nodes()))
-      return player;
-
-  return NULL;
-}
 
 // creates 4 virtual nodes at the end of _board_size * _board_size to be used
 // as virtual nodes that each player has to connect to win the game
