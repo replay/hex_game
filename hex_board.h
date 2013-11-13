@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
+#include <list>
 
 #include "./types.h"
 
@@ -13,7 +14,7 @@ class HexBoard {
 
   public:
     static void print_board(std::vector<char*>&, int);
-    static void get_adjacent_fields(int, int, std::vector<int>&);
+    static void get_adjacent_fields(int, int, std::list<int>&);
     static void get_board_edge_fields(const int, board_direction,
       std::pair< std::vector<int>, std::vector<int> >&);
 };

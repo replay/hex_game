@@ -83,7 +83,7 @@ void HexBoard::get_board_edge_fields(const int board_size, board_direction dir,
 // creates a list of all fields that are adjacent to a given field based
 // on the size of the hex board
 void HexBoard::get_adjacent_fields(
-  int field, int board_size, std::vector<int>& adjacent_fields) {
+  int field, int board_size, std::list<int>& adjacent_fields) {
   std::vector< std::pair<int, bool> > surrounding_hexagon;
 
   // adding all possible neighbours to surrounding_hexagon

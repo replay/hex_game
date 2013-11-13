@@ -1,7 +1,7 @@
 #ifndef EDGE_GRAPH_H_
 #define EDGE_GRAPH_H_
 
-#include <vector>
+#include <list>
 #include <map>
 
 #include "./types.h"
@@ -14,7 +14,7 @@ class EdgeGraph {
   public:
     EdgeGraph(const int);
     void add_edge(int, int, int);
-    void add_edges(int, int, std::vector<int>&);
+    void add_edges(int, int, std::list<int>&);
 
 };
 

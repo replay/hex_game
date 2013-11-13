@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
+#include <functional>
 
 #include "./types.h"
 #include "./field.h"
@@ -16,11 +17,11 @@ class HexGame {
   private:
     EdgeGraph* _edge_graph;
     std::vector<Player*> _players;
-
     std::vector<Field> _fields;
     bool _finished = false;
     int _board_size = 0;
 
+    bool _verify_move(move_t&, int&);
     bool _next_move(Player&);
     bool _has_winner();
     void _create_player_src_dst_nodes();

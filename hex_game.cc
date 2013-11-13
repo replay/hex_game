@@ -72,27 +72,14 @@ HexGame::~HexGame() {
 
 
 bool HexGame::_next_move(Player& player) {
-  std::vector<int> adjacent_fields, adjacent_fields_of_player;
+  std::list<int> adjacent_fields;
   int field;
+
   move_t move = player.get_move();
 
-  // check if given values are in valid range
-  if (move.first >= this->_board_size || move.second >= this->_board_size)
+  // do some checks to verify if the move is valid
+  if (!this->_verify_move(move, field))
     return false;
-  if (move.first < 0 || move.second < 0)
-    return false;
-
-  // convert two dimensional coordinates into field number
-  field = move.second * this->_board_size + move.first;
-
-  // more move validation
-  if ((field < 0) || (field >= this->_board_size * this->_board_size))
-    return false;
-
-  // check if field is still empty
-  if (!this->_fields[field].is_empty()) {
-    return false;
-  }
 
   // update the board field
   this->_fields[field].use_field(player.get_id(), player.get_symbol());
@@ -100,23 +87,43 @@ bool HexGame::_next_move(Player& player) {
   // create the according edges in the graph
   HexBoard::get_adjacent_fields(field, this->_board_size, adjacent_fields);
 
-  // max size of adjacent_fields_of_player is the size of adjacent_fields
-  adjacent_fields_of_player.resize(adjacent_fields.size());
-
   // copy indexes of fields that belong to player to adjacent_fields_of_player
-  std::copy_if(adjacent_fields.begin(), adjacent_fields.end(),
-    adjacent_fields_of_player.begin(),
-    [&](int i) { return this->_fields[i].get_owner() == player.get_id();}
-  );
+  adjacent_fields.remove_if(
+    [&](int i) { return this->_fields[i].get_owner() != player.get_id(); });
 
   // add edges to all fields that are adjacent and belong to player
   this->_edge_graph->add_edges(
-    field, player.get_id(), adjacent_fields_of_player);
+    player.get_id(), field, adjacent_fields);
 
   // print the move to the console with some ascii art
   AsciiArt::print_players_move(&player, move);
 
   return true;
+}
+
+
+// do a bunch of checks to verify if a given move is ok
+bool HexGame::_verify_move(move_t& m, int& field) {
+
+  // check if given values are in valid range
+  if (m.first >= this->_board_size || m.second >= this->_board_size)
+    return false;
+  if (m.first < 0 || m.second < 0)
+    return false;
+
+  // convert two dimensional coordinates into field number
+  field = m.second * this->_board_size + m.first;
+
+  // more move validation
+  if ((field < 0) || (field >= this->_board_size * this->_board_size))
+    return false;
+
+  // check if field is still empty
+  if (!this->_fields[field].is_empty())
+    return false;
+
+  // all checks ok
+  return true; 
 }
 
 
