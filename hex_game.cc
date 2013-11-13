@@ -18,8 +18,8 @@ HexGame::HexGame() {
     this->_players[1] = player;
   }
 
-  // current player is the first one
-  player = this->_players[0];
+  // current player is the first one, will be swapped before first input
+  player = this->_players[1];
 
   // set the playing direction for each of the two players
   this->_players[0]->set_board_direction(board_direction::WEST_EAST);
@@ -42,9 +42,9 @@ HexGame::HexGame() {
   // welcome banner and symbol legend
   AsciiArt::banner(this->_players[0], this->_players[1]);
 
-  // keep playing until a winner is found
-  while (!this->_edge_graph->fields_are_connected(
-    player->get_src_dst_nodes())) {
+  do {
+    // swap players because it's the other one's turn
+    player = this->_swap_player(player);
 
     HexBoard::print_board(board_symbols, this->_board_size);
 
@@ -54,9 +54,9 @@ HexGame::HexGame() {
       std::cout << "illegal move, try again" << std::endl;
     }
 
-    // switch the current player
-    player = this->_swap_player(player);
-  }
+  // keep playing until a winner is found
+  } while (!this->_edge_graph->fields_are_connected(
+    player->get_src_dst_nodes()));
 }
 
 
