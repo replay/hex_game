@@ -57,6 +57,8 @@ HexGame::HexGame() {
   // keep playing until a winner is found
   } while (!this->_edge_graph->fields_are_connected(player->get_id(),
     player->get_src_dst_nodes()));
+
+  // here should be some "yay" for the winner
 }
 
 
