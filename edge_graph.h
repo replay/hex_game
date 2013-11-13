@@ -3,6 +3,7 @@
 
 #include <list>
 #include <map>
+#include <utility>
 
 #include "./types.h"
 
@@ -15,6 +16,7 @@ class EdgeGraph {
     EdgeGraph(const int);
     void add_edge(int, int, int);
     void add_edges(int, int, std::list<int>&);
+    bool fields_are_connected(std::pair<int, int>);
 
 };
 

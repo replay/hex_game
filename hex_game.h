@@ -20,11 +20,12 @@ class HexGame {
     std::vector<Field> _fields;
     bool _finished = false;
     int _board_size = 0;
+    int _winner = 0;
 
     bool _verify_move(move_t&, int&);
     bool _next_move(Player&);
-    bool _has_winner();
     void _create_player_src_dst_nodes();
+    Player* _get_winner();
     Player* _swap_player(Player*);
 
   public:

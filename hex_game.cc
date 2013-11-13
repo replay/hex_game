@@ -43,7 +43,7 @@ HexGame::HexGame() {
   AsciiArt::banner(this->_players[0], this->_players[1]);
 
   // keep playing until there is a winner
-  while (!this->_has_winner()) {
+  while (this->_get_winner() == NULL) {
     HexBoard::print_board(board_symbols, this->_board_size);
 
     // ask player for the next move
@@ -58,16 +58,16 @@ HexGame::HexGame() {
 }
 
 
-// switch between the two players
-Player* HexGame::_swap_player(Player* player) {
-  return player == this->_players[0] ? this->_players[1] : this->_players[0];
-}
-
-
 HexGame::~HexGame() {
   delete this->_players[0];
   delete this->_players[1];
   delete this->_edge_graph;
+}
+
+
+// switch between the two players
+Player* HexGame::_swap_player(Player* player) {
+  return player == this->_players[0] ? this->_players[1] : this->_players[0];
 }
 
 
@@ -127,13 +127,14 @@ bool HexGame::_verify_move(move_t& m, int& field) {
 }
 
 
-bool HexGame::_has_winner() {
+Player* HexGame::_get_winner() {
   std::pair< std::vector<int>, std::vector<int> > board_edges;
 
-  //HexBoard::get_board_edge_fields(this->_board_size, HexBoard::edge_direction::HORIZONTAL, board_edges);
-  //HexBoard::get_board_edge_fields(this->_board_size, HexBoard::edge_direction::VERTICAL, board_edges);
+  for (auto player: this->_players)
+    if (this->_edge_graph->fields_are_connected(player->get_src_dst_nodes()))
+      return player;
 
-  return false;
+  return NULL;
 }
 
 // creates 4 virtual nodes at the end of _board_size * _board_size to be used
