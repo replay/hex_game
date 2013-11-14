@@ -17,16 +17,24 @@ class PlayerContainer {
     bool add_player(Player*);
     void swap_active();
     void swap_player_position();
+    void set_virtual_start(int);
+
+    int get_active_id();
+
     char get_symbol(int);
     char get_symbol();
+
     std::pair<int, int> get_src_dst_nodes(int);
-    std::vector<Player*>::iterator begin();
-    std::vector<Player*>::iterator end();
+    std::pair<int, int> get_src_dst_nodes();
+
+    std::pair<int, int> get_move(int);
     std::pair<int, int> get_move();
-    int get_active_id();
+
     std::string get_name(int);
     std::string get_name();
-    void set_virtual_start(int);
+
+    std::vector<Player*>::iterator begin();
+    std::vector<Player*>::iterator end();
 };
 
 #endif  // PLAYER_CONTAINER_H_
