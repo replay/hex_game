@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <vector>
 #include <list>
+#include <cmath>
 
 #include "./types.h"
 

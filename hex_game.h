@@ -7,6 +7,8 @@
 #include <functional>
 #include <tuple>
 
+#include <cmath>
+
 #include "./types.h"
 #include "./field.h"
 #include "./ascii_art.h"

@@ -10,10 +10,6 @@ HexGame::HexGame() {
   this->_players[0] = new HumanPlayer(1, "player1", 'X');
   this->_players[1] = new HumanPlayer(2, "player2", 'O');
 
-  // create an EdgeGraph for each player
-  for (auto p: this->_players)
-    this->_player_data[p->get_id()].first = new EdgeGraph(this->_board_size);
-
   // ask who gets the first move
   // the one who gets the first move will be the first element in the vector 
   if (AsciiArt::ask_user("who gets the first move?", 
@@ -50,8 +46,13 @@ HexGame::HexGame() {
     )
   ];
 
-  this->_fields.resize(this->_board_size * this->_board_size);
-  board_symbols.resize(this->_board_size * this->_board_size);
+  // create an EdgeGraph for each player
+  for (auto p: this->_players)
+    this->_player_data[p->get_id()].first = new EdgeGraph(this->_board_size);
+
+  // create vectors of fields and symbols according to the chosen board size
+  this->_fields.resize(pow(this->_board_size, 2));
+  board_symbols.resize(pow(this->_board_size, 2));
 
   // create a list of pointers to the symbols of each field on the board
   std::transform (this->_fields.begin(), this->_fields.end(),
@@ -152,7 +153,7 @@ bool HexGame::_verify_move(std::pair<int, int>& m, int& field) {
   field = m.second * this->_board_size + m.first;
 
   // more move validation
-  if ((field < 0) || (field >= this->_board_size * this->_board_size))
+  if ((field < 0) || (field >= pow(this->_board_size, 2)))
     return false;
 
   // check if field is still empty
@@ -169,24 +170,37 @@ bool HexGame::_verify_move(std::pair<int, int>& m, int& field) {
 void HexGame::_create_player_src_dst_nodes() {
   Player* player;
 
-  // create 2 virtual nodes per player
-  // append them at the end of the existing nodes
+  // create 2 virtual nodes per player. each virtual node will be connected
+  // to all nodes on one edge of the board. by checking if there is a path
+  // from one of the virtual nodes to the opposite one we can know if a player
+  // has won the game.
   for (int i = 0; i < 2; ++i)
     this->_players[i]->set_src_dst_nodes(std::pair<int, int>(
-      this->_board_size * this->_board_size + 1 + i * 2,
-      this->_board_size * this->_board_size + 2 + i * 2));
+      pow(this->_board_size, 2) + 1 + i * 2,
+      pow(this->_board_size, 2) + 2 + i * 2
+    ));
 
   for (auto player: this->_players) {
     std::pair< std::vector<int>, std::vector<int> > board_edge_nodes;
 
-    // get the board edge fields for the current player's playing direction
+    // get all fields on the two opposite sides of the board that the current
+    // player has to connect. store them into board_edge_nodes
     HexBoard::get_board_edge_fields(
-        this->_board_size, this->_player_data[player->get_id()].second, board_edge_nodes);
+      this->_board_size,
+      this->_player_data[player->get_id()].second,
+      board_edge_nodes
+    );
 
-    // connect all the board edge nodes to the current player's virtual node
+    // connect nodes of one board edge to one of the players virtual nodes
     for (auto i: board_edge_nodes.first)
-      this->_player_data[player->get_id()].first->add_edge(player->get_src_dst_nodes().first, i);
+      this->_player_data[player->get_id()].first->add_edge(
+        player->get_src_dst_nodes().first, i
+      );
+
+    // connect nodes of other board edge to the players other virtual node
     for (auto i: board_edge_nodes.second)
-      this->_player_data[player->get_id()].first->add_edge(player->get_src_dst_nodes().second, i);
+      this->_player_data[player->get_id()].first->add_edge(
+        player->get_src_dst_nodes().second, i
+      );
   }
 }

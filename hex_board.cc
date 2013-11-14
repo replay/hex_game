@@ -22,7 +22,7 @@ void HexBoard::print_board(std::vector<char*>& fields, int board_size) {
     std::cout << *i;
 
     if ((i - fields.begin()) % board_size == board_size - 1 &&
-        (i - fields.begin()) != board_size * board_size - 1) {
+        (i - fields.begin()) != pow(board_size, 2) - 1) {
       HexBoard::_newline(board_size, indentations);
     }
   }
