@@ -1,14 +1,17 @@
 #include "./hex_game.h"
 
-
 HexGame::HexGame() {
   Player* player;
   std::vector<char*> board_symbols;
 
-  // create the players
+  // two players and one edge graph for each of them
   this->_players.resize(2);
+  this->_edge_graphs.resize(2);
+
   this->_players[0] = new HumanPlayer(1, "player1", 'X');
   this->_players[1] = new HumanPlayer(2, "player2", 'O');
+  for (auto p: this->_players)
+    this->_edge_graphs[p->get_id()] = new EdgeGraph(this->_board_size);
 
   // ask who gets the first move
   // the one who gets the first move will be the first element in the vector 
@@ -28,7 +31,6 @@ HexGame::HexGame() {
   // let player choose the board size and initialize storage accordingly
   this->_board_size = AsciiArt::choose_board_size();
   this->_fields.resize(this->_board_size * this->_board_size);
-  this->_edge_graph = new EdgeGraph(this->_board_size);
   board_symbols.resize(this->_board_size * this->_board_size);
 
   // create a list of pointers to the symbols of each field on the board
@@ -55,18 +57,20 @@ HexGame::HexGame() {
     }
 
   // keep playing until a winner is found
-  } while (!this->_edge_graph->fields_are_connected(player->get_id(),
+  } while (!this->_edge_graphs[player->get_id()]->fields_are_connected(
     player->get_src_dst_nodes()));
 
-  // here should be some "yay" for the winner
+  // give the winner some nice banner
   AsciiArt::announce_winner(player->get_name());
+  HexBoard::print_board(board_symbols, this->_board_size);
 }
 
 
 HexGame::~HexGame() {
   delete this->_players[0];
   delete this->_players[1];
-  delete this->_edge_graph;
+  delete this->_edge_graphs[0];
+  delete this->_edge_graphs[1];
 }
 
 
@@ -97,8 +101,7 @@ bool HexGame::_next_move(Player& player) {
     [&](int i) { return this->_fields[i].get_owner() != player.get_id(); });
 
   // add edges to all fields that are adjacent and belong to player
-  this->_edge_graph->add_edges(
-    player.get_id(), field, adjacent_fields);
+  this->_edge_graphs[player.get_id()]->add_edges(field, adjacent_fields);
 
   // print the move to the console with some ascii art
   AsciiArt::print_players_move(&player, move);
@@ -153,8 +156,8 @@ void HexGame::_create_player_src_dst_nodes() {
 
     // connect all the board edge nodes to the current player's virtual node
     for (auto i: board_edge_nodes.first)
-      this->_edge_graph->add_edge(player->get_id(), player->get_src_dst_nodes().first, i);
+      this->_edge_graphs[player->get_id()]->add_edge(player->get_src_dst_nodes().first, i);
     for (auto i: board_edge_nodes.second)
-      this->_edge_graph->add_edge(player->get_id(), player->get_src_dst_nodes().second, i);
+      this->_edge_graphs[player->get_id()]->add_edge(player->get_src_dst_nodes().second, i);
   }
 }

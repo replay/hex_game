@@ -11,15 +11,18 @@
 class EdgeGraph {
   private:
     const int _board_size;
+    std::vector<bool> _reachable;
 
-    // one vector of edges for each player
-    edge_list_t _edges;
+    // a vector of edges for each field
+    typedef std::map< int, std::vector< int > > edges_t;
+    //std::map< int, std::vector< int > > _edges;
+    edges_t _edges;
 
   public:
     EdgeGraph(const int);
-    void add_edge(int, int, int);
-    void add_edges(int, int, std::list<int>&);
-    bool fields_are_connected(int, std::pair<int, int>);
+    void add_edge(int, int);
+    void add_edges(int, std::list<int>&);
+    bool fields_are_connected(std::pair<int, int>);
 
 };
 

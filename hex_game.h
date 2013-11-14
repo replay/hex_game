@@ -15,8 +15,8 @@
 
 class HexGame {
   private:
-    EdgeGraph* _edge_graph;
     std::vector<Player*> _players;
+    std::vector<EdgeGraph*> _edge_graphs;
     std::vector<Field> _fields;
     int _board_size = 0;
 
