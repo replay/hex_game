@@ -9,18 +9,12 @@
 
 #include <cmath>
 
-#include "./types.h"
 #include "./field.h"
 #include "./ascii_art.h"
 #include "./hex_board.h"
 #include "./edge_graph.h"
 #include "./player_container.h"
 #include "./human_player.h"
-
-/*const std::map< int, board_direction > player_directions = {
-  std::pair< int, board_direction >(0, board_direction::WEST_EAST,
-  std::pair< int, board_direction >(1, board_direction::NORTH_SOUTH
-};*/
 
 const std::map<int, board_direction> player_directions = {
   {0, board_direction::WEST_EAST},

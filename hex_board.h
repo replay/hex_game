@@ -6,8 +6,7 @@
 #include <vector>
 #include <list>
 #include <cmath>
-
-#include "./types.h"
+#include <map>
 
 // defines the direction in which a player has to create a path
 enum class board_direction: short {WEST_EAST, NORTH_SOUTH};

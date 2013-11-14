@@ -1,7 +1,8 @@
 #ifndef PLAYER_H_
 #define PLAYER_H_
 
-#include "./types.h"
+#include <utility>
+#include <iostream>
 
 // this is the abstract base class for a player
 // it should be extended to be a human or a computer player

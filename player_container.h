@@ -3,9 +3,9 @@
 
 #include <vector>
 #include <utility>
+#include <iostream>
 
 #include "./player.h"
-#include "./types.h"
 
 class PlayerContainer {
   private:
