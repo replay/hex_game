@@ -6,6 +6,7 @@
 #include <tuple>
 #include <string>
 #include <vector>
+#include <limits>
 
 class AsciiArt {
   public:

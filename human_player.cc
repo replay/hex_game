@@ -14,24 +14,27 @@ HumanPlayer::HumanPlayer(int id, const char* player_name, const char symbol)
   : Player(id, player_name, symbol) {}
 
 
+int HumanPlayer::_get_coordinate(char coord) {
+  std::string user_input("");
+
+  while (!this->_is_numeric(user_input)) {
+    std::cout << coord << ": ";
+    std::cin >> user_input;
+
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
+  }
+  return std::stoi(user_input);
+}
+
 // ask the player for his next move
 std::pair<int, int> HumanPlayer::get_move() {
   int x, y;
-  std::string user_input("");
 
-  //std::cout << "enter the coordinates of your next move: " << std::endl;
-  while (!this->_is_numeric(user_input)) {
-    std::cout << "x: ";
-    std::cin >> user_input;
-  }
-  x = std::stoi(user_input) - 1;
-
-  user_input = std::string("");
-  while (!this->_is_numeric(user_input)) {
-    std::cout << "y: ";
-    std::cin >> user_input;
-  }
-  y = std::stoi(user_input) - 1;
+  x = this->_get_coordinate('x') - 1;
+  y = this->_get_coordinate('y') - 1;
 
   return std::pair<int, int>(x, y);
 }

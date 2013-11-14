@@ -32,7 +32,13 @@ int AsciiArt::ask_user(std::string question, std::vector<std::string> choices) {
     for (int i = 0; i < choices.size(); ++i) {
       std::cout << i + 1 << ") : " << choices[i] << std::endl;
     }
+    std::cout << "your choice: ";
     std::cin >> choice;
+
+    if (std::cin.fail()) {
+      std::cin.clear();
+      std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
   }
   return choice - 1;
 }

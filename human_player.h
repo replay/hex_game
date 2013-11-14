@@ -2,6 +2,7 @@
 #define HUMAN_PLAYER_H_
 
 #include <iostream>
+#include <limits>
 #include "./player.h"
 
 
@@ -9,6 +10,7 @@
 class HumanPlayer: public Player {
   private:
     bool _is_numeric(std::string&);
+    inline int _get_coordinate(char);
 
   public:
     HumanPlayer();
