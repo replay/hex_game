@@ -6,17 +6,13 @@
 #include <utility>
 #include <algorithm>
 
-#include "./types.h"
-
 class EdgeGraph {
   private:
     const int _board_size;
     std::vector<bool> _reachable;
 
     // a vector of edges for each field
-    typedef std::map< int, std::vector< int > > edges_t;
-    //std::map< int, std::vector< int > > _edges;
-    edges_t _edges;
+    std::map< int, std::vector< int > > _edges;
 
   public:
     EdgeGraph(const int);

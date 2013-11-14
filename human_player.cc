@@ -15,7 +15,7 @@ HumanPlayer::HumanPlayer(int id, const char* player_name, const char symbol)
 
 
 // ask the player for his next move
-move_t HumanPlayer::get_move() {
+std::pair<int, int> HumanPlayer::get_move() {
   int x, y;
   std::string user_input("");
 
@@ -33,7 +33,7 @@ move_t HumanPlayer::get_move() {
   }
   y = std::stoi(user_input) - 1;
 
-  return move_t(x, y);
+  return std::pair<int, int>(x, y);
 }
 
 

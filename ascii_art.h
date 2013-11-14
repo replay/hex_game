@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <iomanip>
-#include "./types.h"
 #include "./player.h"
 
 class AsciiArt {
@@ -15,7 +14,7 @@ class AsciiArt {
     static void banner(Player*, Player*);
     static int who_begins(Player*, Player*);
     static int choose_board_size();
-    static void print_players_move(Player*, move_t);
+    static void print_players_move(Player*, std::pair<int, int>);
     static void announce_winner(std::string);
 };
 

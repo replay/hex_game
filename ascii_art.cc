@@ -88,7 +88,7 @@ void AsciiArt::banner(Player* p1, Player* p2) {
   AsciiArt::horizontal_line("*");
 }
 
-void AsciiArt::print_players_move(Player* player, move_t move) {
+void AsciiArt::print_players_move(Player* player, std::pair<int, int> move) {
   std::cout << std::endl;
   AsciiArt::horizontal_line();
   std::cout << "\"" << player << "\" played " <<

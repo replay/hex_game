@@ -84,7 +84,7 @@ bool HexGame::_next_move(Player& player) {
   std::list<int> adjacent_fields;
   int field;
 
-  move_t move = player.get_move();
+  std::pair<int, int> move = player.get_move();
 
   // do some checks to verify if the move is valid
   if (!this->_verify_move(move, field))
@@ -111,7 +111,7 @@ bool HexGame::_next_move(Player& player) {
 
 
 // do a bunch of checks to verify if a given move is ok
-bool HexGame::_verify_move(move_t& m, int& field) {
+bool HexGame::_verify_move(std::pair<int, int>& m, int& field) {
 
   // check if given values are in valid range
   if (m.first >= this->_board_size || m.second >= this->_board_size)

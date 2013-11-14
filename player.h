@@ -17,7 +17,7 @@ class Player {
     Player();
     Player(int, const std::string, const char);
     Player(int, const char*, const char);
-    virtual move_t get_move()=0;
+    virtual std::pair<int, int> get_move()=0;
     void set_name(std::string);
     std::string get_name();
     void set_symbol(const char);
