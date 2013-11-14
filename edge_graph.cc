@@ -1,8 +1,7 @@
 #include "./edge_graph.h"
 
 
-EdgeGraph::EdgeGraph(const int board_size)
-  : _board_size(board_size) {}
+EdgeGraph::EdgeGraph() {}
 
 
 void EdgeGraph::add_edges(int src_f, std::list<int>& connect_fields) {
@@ -12,6 +11,7 @@ void EdgeGraph::add_edges(int src_f, std::list<int>& connect_fields) {
 
 
 void EdgeGraph::add_edge(int f1, int f2) {
+  std::cout << "adding edge: " << f1 << ":" << f2 << std::endl;
   this->_edges[f1].push_back(f2);
   this->_edges[f2].push_back(f1);
 }
@@ -19,7 +19,7 @@ void EdgeGraph::add_edge(int f1, int f2) {
 
 bool EdgeGraph::fields_are_connected(std::pair<int, int> src_dst) {
   // the additional 4 is for the virtual nodes on each edge of the board
-  std::vector<bool> reachable(pow(this->_board_size, 2) + 4, false);
+  std::vector<bool> reachable(this->_edges.size(), false);
 
   // list of fields that should be visited
   std::list<int> checklist;

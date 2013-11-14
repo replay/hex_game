@@ -17,7 +17,7 @@ int Field::get_owner() {
 }
 
 bool Field::is_empty() {
-  if (this->_owner == 0)
+  if (this->_owner == -1)
     return true;
   return false;
 }

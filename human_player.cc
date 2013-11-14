@@ -7,11 +7,11 @@ HumanPlayer::HumanPlayer()
 }
 
 
-HumanPlayer::HumanPlayer(int id, const std::string player_name, const char symbol)
-  : Player(id, player_name, symbol) {}
+HumanPlayer::HumanPlayer(const std::string player_name, const char symbol)
+  : Player(player_name, symbol) {}
 
-HumanPlayer::HumanPlayer(int id, const char* player_name, const char symbol)
-  : Player(id, player_name, symbol) {}
+HumanPlayer::HumanPlayer(const char* player_name, const char symbol)
+  : Player(player_name, symbol) {}
 
 
 int HumanPlayer::_get_coordinate(char coord) {

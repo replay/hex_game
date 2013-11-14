@@ -3,14 +3,12 @@
 Player::Player() {}
 
 
-Player::Player(int id, const std::string player_name, const char symbol)
-  : _id(id),
-    _player_name(player_name),
+Player::Player(const std::string player_name, const char symbol)
+  : _player_name(player_name),
     _symbol(symbol) {}
 
-Player::Player(int id, const char* player_name, const char symbol)
-  : _id(id),
-    _player_name(player_name),
+Player::Player(const char* player_name, const char symbol)
+  : _player_name(player_name),
     _symbol(symbol) {}
 
 void Player::set_name(std::string name) {

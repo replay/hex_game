@@ -13,7 +13,7 @@ class Field {
     bool is_empty();
 
   private:
-    int _owner = 0;
+    int _owner = -1;
     char _symbol = '.';
 };
 

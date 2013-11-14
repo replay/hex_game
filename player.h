@@ -14,8 +14,8 @@ class Player {
 
   public:
     Player();
-    Player(int, const std::string, const char);
-    Player(int, const char*, const char);
+    Player(const std::string, const char);
+    Player(const char*, const char);
     virtual std::pair<int, int> get_move()=0;
     void set_name(std::string);
     std::string get_name();

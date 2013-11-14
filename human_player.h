@@ -14,8 +14,8 @@ class HumanPlayer: public Player {
 
   public:
     HumanPlayer();
-    HumanPlayer(int, const std::string, const char);
-    HumanPlayer(int, const char*, const char);
+    HumanPlayer(const std::string, const char);
+    HumanPlayer(const char*, const char);
     std::pair<int, int> get_move();
 };
 

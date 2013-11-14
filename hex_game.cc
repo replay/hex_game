@@ -1,14 +1,12 @@
 #include "./hex_game.h"
 
 HexGame::HexGame() {
-  Player* player;
+//Player* player;
   std::vector<char*> board_symbols;
 
   // two players and one edge graph for each of them
-  this->_players.resize(2);
-
-  this->_players[0] = new HumanPlayer(1, "player1", 'X');
-  this->_players[1] = new HumanPlayer(2, "player2", 'O');
+  this->_players.add_player(new HumanPlayer("player1", 'X'));
+  this->_players.add_player(new HumanPlayer("player2", 'O'));
 
   // ask who gets the first move
   // the one who gets the first move will be the first element in the vector 
@@ -20,18 +18,14 @@ HexGame::HexGame() {
             return v;
           }
         )
-      ) == 2) {
-    player = this->_players[0];
-    this->_players[0] = this->_players[1];
-    this->_players[1] = player;
+      ) == 1) {
+
+    // the other player should move first
+    this->_players.swap_player_position();
   }
 
   // current player is the first one, will be swapped before first input
-  player = this->_players[1];
-
-  // set the playing direction for each of the two players
-  this->_player_data[this->_players[0]->get_id()].second = board_direction::WEST_EAST;
-  this->_player_data[this->_players[1]->get_id()].second = board_direction::NORTH_SOUTH;
+  //player = this->_players.get_first();
 
   // let player choose a board size out of _board_choices, store the result in _board_size
   this->_board_size = this->_board_choices[
@@ -46,9 +40,10 @@ HexGame::HexGame() {
     )
   ];
 
-  // create an EdgeGraph for each player
-  for (auto p: this->_players)
-    this->_player_data[p->get_id()].first = new EdgeGraph(this->_board_size);
+  // create an EdgeGraph for each of the two players
+  this->_edge_graphs.resize(2);
+  this->_edge_graphs[0] = new EdgeGraph();
+  this->_edge_graphs[1] = new EdgeGraph();
 
   // create vectors of fields and symbols according to the chosen board size
   this->_fields.resize(pow(this->_board_size, 2));
@@ -65,76 +60,78 @@ HexGame::HexGame() {
   // welcome banner and symbol legend
   AsciiArt::banner(
     std::make_tuple(
-      this->_players[0]->get_name(),
-      this->_players[0]->get_symbol(),
-      direction_string.at(this->_player_data[this->_players[0]->get_id()].second)),
+      this->_players.get_name(0),
+      this->_players.get_symbol(0),
+      direction_string.at(board_direction::WEST_EAST)
+    ),
     std::make_tuple(
-      this->_players[1]->get_name(),
-      this->_players[1]->get_symbol(),
-      direction_string.at(this->_player_data[this->_players[1]->get_id()].second))
+      this->_players.get_name(1),
+      this->_players.get_symbol(1),
+      direction_string.at(board_direction::NORTH_SOUTH)
+    )
   );
 
-  do {
-    // swap players because it's the other one's turn
-    player = this->_swap_player(player);
-
+  while (true) {
     HexBoard::print_board(board_symbols, this->_board_size);
 
     // ask player for the next move
-    std::cout << player << "'s turn:" << std::endl;
-    while (!this->_next_move(*player)) {
+    std::cout << this->_players.get_name(this->_players.get_active_id())
+      << "'s turn:" << std::endl;
+
+    while (!this->_next_move()) {
       std::cout << "illegal move, try again" << std::endl;
     }
 
-  // keep playing until a winner is found
-  } while (!this->_player_data[player->get_id()].first->fields_are_connected(
-    player->get_src_dst_nodes()));
+    // keep playing until a winner is found
+    if (this->_edge_graphs[this->_players.get_active_id()]
+      ->fields_are_connected(
+        this->_players.get_src_dst_nodes(
+          this->_players.get_active_id())))
+      break;
+
+    // swap players because it's the other one's turn
+    this->_players.swap_active();
+  }
 
   // give the winner some nice banner
-  AsciiArt::announce_winner(player->get_name());
+  AsciiArt::announce_winner(this->_players.get_name(this->_players.get_active_id()));
   HexBoard::print_board(board_symbols, this->_board_size);
 }
 
 
 HexGame::~HexGame() {
-  delete this->_player_data[this->_players[0]->get_id()].first;
-  delete this->_player_data[this->_players[1]->get_id()].first;
-  delete this->_players[0];
-  delete this->_players[1];
+  delete this->_edge_graphs[0];
+  delete this->_edge_graphs[1];
 }
 
 
-// switch between the two players
-Player* HexGame::_swap_player(Player* player) {
-  return player == this->_players[0] ? this->_players[1] : this->_players[0];
-}
-
-
-bool HexGame::_next_move(Player& player) {
+bool HexGame::_next_move() {
   std::list<int> adjacent_fields;
   int field;
 
-  std::pair<int, int> move = player.get_move();
+  std::pair<int, int> move = this->_players.get_move();
 
   // do some checks to verify if the move is valid
   if (!this->_verify_move(move, field))
     return false;
 
   // update the board field
-  this->_fields[field].use_field(player.get_id(), player.get_symbol());
+  this->_fields[field].use_field(
+      this->_players.get_active_id(),
+      this->_players.get_symbol());
 
   // create the according edges in the graph
   HexBoard::get_adjacent_fields(field, this->_board_size, adjacent_fields);
 
   // copy indexes of fields that belong to player to adjacent_fields_of_player
   adjacent_fields.remove_if(
-    [&](int i) { return this->_fields[i].get_owner() != player.get_id(); });
+    [&](int i) { return this->_fields[i].get_owner() != this->_players.get_active_id(); });
 
   // add edges to all fields that are adjacent and belong to player
-  this->_player_data[player.get_id()].first->add_edges(field, adjacent_fields);
+  this->_edge_graphs[this->_players.get_active_id()]->add_edges(field, adjacent_fields);
 
   // print the move to the console with some ascii art
-  AsciiArt::print_players_move(player.get_name(), move);
+  AsciiArt::print_players_move(this->_players.get_name(), move);
 
   return true;
 }
@@ -165,7 +162,7 @@ bool HexGame::_verify_move(std::pair<int, int>& m, int& field) {
 }
 
 
-// creates 4 virtual nodes at the end of _board_size * _board_size to be used
+// creates 4 virtual nodes at the end of all real fields to be used
 // as virtual nodes that each player has to connect to win the game
 void HexGame::_create_player_src_dst_nodes() {
   Player* player;
@@ -174,33 +171,34 @@ void HexGame::_create_player_src_dst_nodes() {
   // to all nodes on one edge of the board. by checking if there is a path
   // from one of the virtual nodes to the opposite one we can know if a player
   // has won the game.
-  for (int i = 0; i < 2; ++i)
-    this->_players[i]->set_src_dst_nodes(std::pair<int, int>(
-      pow(this->_board_size, 2) + 1 + i * 2,
-      pow(this->_board_size, 2) + 2 + i * 2
-    ));
+  this->_players.set_virtual_start(pow(this->_board_size, 2) + 1);
 
-  for (auto player: this->_players) {
+  for (int i = 0; i <= 1; ++i) {
     std::pair< std::vector<int>, std::vector<int> > board_edge_nodes;
+    board_direction dir;
+    std::pair<int, int> src_dst_nodes =
+      this->_players.get_src_dst_nodes(i);
+
+    if (i == 0) {
+      dir = board_direction::WEST_EAST;
+    } else {
+      dir = board_direction::NORTH_SOUTH;
+    }
 
     // get all fields on the two opposite sides of the board that the current
     // player has to connect. store them into board_edge_nodes
     HexBoard::get_board_edge_fields(
       this->_board_size,
-      this->_player_data[player->get_id()].second,
+      dir,
       board_edge_nodes
     );
 
     // connect nodes of one board edge to one of the players virtual nodes
-    for (auto i: board_edge_nodes.first)
-      this->_player_data[player->get_id()].first->add_edge(
-        player->get_src_dst_nodes().first, i
-      );
+    for (auto j: board_edge_nodes.first)
+      this->_edge_graphs[i]->add_edge(j, src_dst_nodes.first);
 
     // connect nodes of other board edge to the players other virtual node
-    for (auto i: board_edge_nodes.second)
-      this->_player_data[player->get_id()].first->add_edge(
-        player->get_src_dst_nodes().second, i
-      );
+    for (auto j: board_edge_nodes.second)
+      this->_edge_graphs[i]->add_edge(j, src_dst_nodes.second);
   }
 }
