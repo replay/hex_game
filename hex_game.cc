@@ -133,7 +133,7 @@ bool HexGame::_next_move(Player& player) {
   this->_player_data[player.get_id()].first->add_edges(field, adjacent_fields);
 
   // print the move to the console with some ascii art
-  AsciiArt::print_players_move(&player, move);
+  AsciiArt::print_players_move(player.get_name(), move);
 
   return true;
 }

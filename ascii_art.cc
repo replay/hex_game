@@ -62,7 +62,7 @@ void AsciiArt::banner(std::tuple<std::string, char, std::string> p1,
   AsciiArt::horizontal_line("*");
 }
 
-void AsciiArt::print_players_move(Player* player, std::pair<int, int> move) {
+void AsciiArt::print_players_move(std::string player, std::pair<int, int> move) {
   std::cout << std::endl;
   AsciiArt::horizontal_line();
   std::cout << "\"" << player << "\" played " <<

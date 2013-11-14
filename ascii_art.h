@@ -5,8 +5,7 @@
 #include <iomanip>
 #include <tuple>
 #include <string>
-#include <numeric>
-#include "./player.h"
+#include <vector>
 
 class AsciiArt {
   public:
@@ -17,7 +16,7 @@ class AsciiArt {
     static void banner(std::tuple<std::string, char, std::string>,
                        std::tuple<std::string, char, std::string>);
     static int ask_user(std::string, std::vector<std::string>);
-    static void print_players_move(Player*, std::pair<int, int>);
+    static void print_players_move(std::string, std::pair<int, int>);
     static void announce_winner(std::string);
 };
 
