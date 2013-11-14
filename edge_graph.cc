@@ -21,7 +21,7 @@ void EdgeGraph::add_edge(int player, int f1, int f2) {
 
 
 bool EdgeGraph::fields_are_connected(int player, std::pair<int, int> src_dst) {
-  std::vector<bool> reachable(this->_board_size, false);
+  std::vector<bool> reachable(this->_board_size * this->_board_size + 4, false);
 
   // list of fields that should be visited
   std::list<int> checklist;
