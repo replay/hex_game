@@ -41,7 +41,16 @@ HexGame::HexGame() {
   this->_create_player_src_dst_nodes();
 
   // welcome banner and symbol legend
-  AsciiArt::banner(this->_players[0], this->_players[1]);
+  AsciiArt::banner(
+    std::make_tuple(
+      this->_players[0]->get_name(),
+      this->_players[0]->get_symbol(),
+      direction_string.at(this->_player_data[this->_players[0]->get_id()].second)),
+    std::make_tuple(
+      this->_players[1]->get_name(),
+      this->_players[1]->get_symbol(),
+      direction_string.at(this->_player_data[this->_players[1]->get_id()].second))
+  );
 
   do {
     // swap players because it's the other one's turn
@@ -151,7 +160,7 @@ void HexGame::_create_player_src_dst_nodes() {
 
     // get the board edge fields for the current player's playing direction
     HexBoard::get_board_edge_fields(
-        this->_board_size, player->get_board_direction(), board_edge_nodes);
+        this->_board_size, this->_player_data[player->get_id()].second, board_edge_nodes);
 
     // connect all the board edge nodes to the current player's virtual node
     for (auto i: board_edge_nodes.first)

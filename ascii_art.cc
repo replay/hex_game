@@ -64,7 +64,8 @@ int AsciiArt::choose_board_size() {
   }
 }
 
-void AsciiArt::banner(Player* p1, Player* p2) {
+void AsciiArt::banner(std::tuple<std::string, char, std::string> p1,
+                      std::tuple<std::string, char, std::string> p2) {
   AsciiArt::horizontal_line("*");
   std::cout << "*" << std::setw(77) << "HEX GAME LEGEND" << " *" << std::endl;
   AsciiArt::horizontal_line("*");
@@ -78,13 +79,13 @@ void AsciiArt::banner(Player* p1, Player* p2) {
     std::string("."),
     std::string(""));
   AsciiArt::three_columns("*",
-    p1->get_name(),
-    std::string(1, p1->get_symbol()),
-    direction_string.at(p1->get_board_direction()));
+    std::get<0>(p1),
+    std::string(1, std::get<1>(p1)),
+    std::get<2>(p1));
   AsciiArt::three_columns("*",
-    p2->get_name(),
-    std::string(1, p2->get_symbol()),
-    direction_string.at(p2->get_board_direction()));
+    std::get<0>(p2),
+    std::string(1, std::get<1>(p2)),
+    std::get<2>(p2));
   AsciiArt::horizontal_line("*");
 }
 

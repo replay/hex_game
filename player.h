@@ -9,7 +9,6 @@ class Player {
   protected:
     std::pair<int, int> _src_dst;
     std::string _player_name;
-    board_direction _board_direction;
     char _symbol;
     int _id;
 
@@ -21,8 +20,6 @@ class Player {
     void set_name(std::string);
     std::string get_name();
     void set_symbol(const char);
-    void set_board_direction(const board_direction);
-    board_direction get_board_direction();
     char get_symbol();
     int get_id();
     void set_src_dst_nodes(std::pair<int, int>);
