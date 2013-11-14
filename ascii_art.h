@@ -4,6 +4,8 @@
 #include <iostream>
 #include <iomanip>
 #include <tuple>
+#include <string>
+#include <numeric>
 #include "./player.h"
 
 class AsciiArt {
@@ -14,8 +16,7 @@ class AsciiArt {
       std::string c1, std::string c2, std::string c3);
     static void banner(std::tuple<std::string, char, std::string>,
                        std::tuple<std::string, char, std::string>);
-    static int who_begins(Player*, Player*);
-    static int choose_board_size();
+    static int ask_user(std::string, std::vector<std::string>);
     static void print_players_move(Player*, std::pair<int, int>);
     static void announce_winner(std::string);
 };

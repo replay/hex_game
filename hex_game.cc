@@ -9,12 +9,22 @@ HexGame::HexGame() {
 
   this->_players[0] = new HumanPlayer(1, "player1", 'X');
   this->_players[1] = new HumanPlayer(2, "player2", 'O');
+
+  // create an EdgeGraph for each player
   for (auto p: this->_players)
     this->_player_data[p->get_id()].first = new EdgeGraph(this->_board_size);
 
   // ask who gets the first move
   // the one who gets the first move will be the first element in the vector 
-  if (AsciiArt::who_begins(this->_players[0], this->_players[1]) == 2) {
+  if (AsciiArt::ask_user("who gets the first move?", 
+        std::accumulate(
+          this->_players.begin(), this->_players.end(),
+          std::vector<std::string>(), [](std::vector<std::string>& v, Player* p) {
+            v.push_back(p->get_name());
+            return v;
+          }
+        )
+      ) == 2) {
     player = this->_players[0];
     this->_players[0] = this->_players[1];
     this->_players[1] = player;
@@ -27,8 +37,19 @@ HexGame::HexGame() {
   this->_player_data[this->_players[0]->get_id()].second = board_direction::WEST_EAST;
   this->_player_data[this->_players[1]->get_id()].second = board_direction::NORTH_SOUTH;
 
-  // let player choose the board size and initialize storage accordingly
-  this->_board_size = AsciiArt::choose_board_size();
+  // let player choose a board size out of _board_choices, store the result in _board_size
+  this->_board_size = this->_board_choices[
+    AsciiArt::ask_user("choose the board size:",
+      std::accumulate(
+        this->_board_choices.begin(), this->_board_choices.end(),
+        std::vector<std::string>(), [](std::vector< std::string >& v, int choice) {
+          v.push_back(std::to_string(choice) + "x" + std::to_string(choice));
+          return v;
+        }
+      )
+    )
+  ];
+
   this->_fields.resize(this->_board_size * this->_board_size);
   board_symbols.resize(this->_board_size * this->_board_size);
 

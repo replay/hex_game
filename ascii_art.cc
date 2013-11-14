@@ -21,47 +21,20 @@ void AsciiArt::three_columns(const char* separator,
   std::cout << std::endl;
 }
 
-int AsciiArt::who_begins(Player* p1, Player* p2) {
+int AsciiArt::ask_user(std::string question, std::vector<std::string> choices) {
   int choice = 0;
 
   AsciiArt::horizontal_line();
 
-  std::cout << "which player gets the first move?" << std::endl;
-  while (choice != 1 && choice != 2) {
-    std::cout << "1) " << p1 << std::endl;
-    std::cout << "2) " << p2 << std::endl;
-    std::cout << "your choice: ";
+  std::cout << question << std::endl;
+
+  while (choice < 1 || choice > choices.size()) {
+    for (int i = 0; i < choices.size(); ++i) {
+      std::cout << i + 1 << ") : " << choices[i] << std::endl;
+    }
     std::cin >> choice;
   }
-  return choice;
-}
-
-int AsciiArt::choose_board_size() {
-  int choice = 0;
-
-  AsciiArt::horizontal_line();
-
-  std::cout << "choose your board size" << std::endl;
-  while (choice <= 0 || choice > 5) {
-    std::cout << "1) : 4x4" << std::endl;
-    std::cout << "2) : 7x7" << std::endl;
-    std::cout << "3) : 11x11" << std::endl;
-    std::cout << "4) : 13x13" << std::endl;
-    std::cout << "5) : 17x17" << std::endl;
-    std::cin >> choice;
-  }
-  switch (choice) {
-    case 1:
-      return 4;
-    case 2:
-      return 7;
-    case 3:
-      return 11;
-    case 4:
-      return 13;
-    case 5:
-      return 17;
-  }
+  return choice - 1;
 }
 
 void AsciiArt::banner(std::tuple<std::string, char, std::string> p1,

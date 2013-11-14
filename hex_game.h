@@ -21,6 +21,7 @@ class HexGame {
     std::vector<Field> _fields;
 
     int _board_size = 0;
+    std::vector<int> _board_choices = {4, 7, 11, 13, 17};
 
     bool _verify_move(std::pair<int, int>&, int&);
     bool _next_move(Player&);
