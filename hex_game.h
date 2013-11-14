@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <vector>
 #include <functional>
+#include <tuple>
 
 #include "./types.h"
 #include "./field.h"
@@ -16,8 +17,9 @@
 class HexGame {
   private:
     std::vector<Player*> _players;
-    std::vector<EdgeGraph*> _edge_graphs;
+    std::map< int, std::pair<EdgeGraph*, board_direction> > _player_data;
     std::vector<Field> _fields;
+
     int _board_size = 0;
 
     bool _verify_move(std::pair<int, int>&, int&);
