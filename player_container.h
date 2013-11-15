@@ -40,9 +40,6 @@ class PlayerContainer {
     std::string get_name(int);
     std::string get_name();
 
-    std::vector<Player*>::iterator begin();
-    std::vector<Player*>::iterator end();
-
     std::vector<std::string> get_all_player_names();
 };
 
