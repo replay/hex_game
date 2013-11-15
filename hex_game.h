@@ -14,11 +14,7 @@
 #include "./edge_graph.h"
 #include "./player_container.h"
 
-const std::map<int, board_direction> player_directions = {
-  {0, board_direction::WEST_EAST},
-  {1, board_direction::NORTH_SOUTH}
-};
-
+// implements the logic of the hex game
 class HexGame {
   private:
     PlayerContainer _players;
@@ -29,8 +25,8 @@ class HexGame {
 
     int _board_size = 0;
 
-    bool _verify_move(std::pair<int, int>&, int&);
     bool _next_move();
+    bool _verify_move(std::pair<int, int>&, int&);
     void _create_player_src_dst_nodes();
 
   public:
