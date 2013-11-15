@@ -9,7 +9,7 @@
 
 function file_list() {
   FILES=""
-  for i in main hex_game edge_graph hex_board field player_container player human_player ascii_art types
+  for i in main hex_game edge_graph hex_board field player_container player human_player ascii_art
   do
     FILES="${FILES} ${i}.${1}"
   done

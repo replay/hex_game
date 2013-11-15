@@ -33,7 +33,6 @@ class HexGame {
     bool _verify_move(std::pair<int, int>&, int&);
     bool _next_move();
     void _create_player_src_dst_nodes();
-    //Player* _swap_player(Player*);
 
   public:
     HexGame();

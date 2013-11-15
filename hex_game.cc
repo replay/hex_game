@@ -1,7 +1,6 @@
 #include "./hex_game.h"
 
 HexGame::HexGame() {
-//Player* player;
   std::vector<char*> board_symbols;
 
   // two players and one edge graph for each of them
@@ -23,9 +22,6 @@ HexGame::HexGame() {
     // the other player should move first
     this->_players.swap_player_position();
   }
-
-  // current player is the first one, will be swapped before first input
-  //player = this->_players.get_first();
 
   // let player choose a board size out of _board_choices, store the result in _board_size
   this->_board_size = this->_board_choices[
