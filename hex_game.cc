@@ -3,26 +3,31 @@
 HexGame::HexGame() {
   std::vector<char*> board_symbols;
 
-  // two players and one edge graph for each of them
+  // create the two players
   this->_players.create_player("player1", player_type::HUMAN);
   this->_players.create_player("player2", player_type::HUMAN);
 
   // ask who gets the first move
   // the one who gets the first move will be the first element in the vector 
   if (AsciiArt::ask_user("who gets the first move?", 
-        this->_players.get_all_player_names()
-      ) == 1) {
+        this->_players.get_all_player_names()) == 1) {
 
     // the other player should move first
     this->_players.swap_player_position();
   }
 
-  // let player choose a board size out of _board_choices, store the result in _board_size
+  // let player choose a board size out of _board_choices
   this->_board_size = this->_board_choices[
     AsciiArt::ask_user("choose the board size:",
+
+      // procuce a vector of strings, each string is a choice of a board size
       std::accumulate(
         this->_board_choices.begin(), this->_board_choices.end(),
-        std::vector<std::string>(), [](std::vector< std::string >& v, int choice) {
+        std::vector<std::string>(),
+        [](std::vector< std::string >& v, int choice) {
+        
+          // concatenate the board sizes into a pretty format:
+          // "([0-9]+)x([0-9]+)"
           v.push_back(std::to_string(choice) + "x" + std::to_string(choice));
           return v;
         }
@@ -35,7 +40,7 @@ HexGame::HexGame() {
   this->_edge_graphs[0] = new EdgeGraph();
   this->_edge_graphs[1] = new EdgeGraph();
 
-  // create vectors of fields and symbols according to the chosen board size
+  // vectors of board fields and symbols according to the chosen board size
   this->_fields.resize(pow(this->_board_size, 2));
   board_symbols.resize(pow(this->_board_size, 2));
 
@@ -61,18 +66,22 @@ HexGame::HexGame() {
     )
   );
 
+  // keep playing until we have a winner
   while (true) {
+
+    // print the whole current board
     HexBoard::print_board(board_symbols, this->_board_size);
 
     // ask player for the next move
     std::cout << this->_players.get_name(this->_players.get_active_id())
       << "'s turn:" << std::endl;
 
+    // retry until the move is valid
     while (!this->_next_move()) {
       std::cout << "illegal move, try again" << std::endl;
     }
 
-    // keep playing until a winner is found
+    // break if a player has won the game
     if (this->_edge_graphs[this->_players.get_active_id()]
       ->fields_are_connected(
         this->_players.get_src_dst_nodes(
@@ -83,8 +92,9 @@ HexGame::HexGame() {
     this->_players.swap_active();
   }
 
-  // give the winner some nice banner
-  AsciiArt::announce_winner(this->_players.get_name(this->_players.get_active_id()));
+  // print some nice banner for the winner
+  AsciiArt::announce_winner(
+      this->_players.get_name(this->_players.get_active_id()));
   HexBoard::print_board(board_symbols, this->_board_size);
 }
 
@@ -95,10 +105,12 @@ HexGame::~HexGame() {
 }
 
 
+// retrieve the next move from player and execute it
 bool HexGame::_next_move() {
   std::list<int> adjacent_fields;
   int field;
 
+  // retreive the next move from currently active Player object
   std::pair<int, int> move = this->_players.get_move();
 
   // do some checks to verify if the move is valid
@@ -110,15 +122,19 @@ bool HexGame::_next_move() {
       this->_players.get_active_id(),
       this->_players.get_symbol());
 
-  // create the according edges in the graph
+  // get all fields on the board that are adjacent to the given field
   HexBoard::get_adjacent_fields(field, this->_board_size, adjacent_fields);
 
-  // copy indexes of fields that belong to player to adjacent_fields_of_player
+  // remove fields from adjacent_fields that do not belong to current player
   adjacent_fields.remove_if(
-    [&](int i) { return this->_fields[i].get_owner() != this->_players.get_active_id(); });
+    [&](int i) {
+      return this->_fields[i].get_owner() != this->_players.get_active_id();
+    }
+  );
 
-  // add edges to all fields that are adjacent and belong to player
-  this->_edge_graphs[this->_players.get_active_id()]->add_edges(field, adjacent_fields);
+  // add edges to all fields that are adjacent and belong to current player
+  this->_edge_graphs[this->_players.get_active_id()]
+    ->add_edges(field, adjacent_fields);
 
   // print the move to the console with some ascii art
   AsciiArt::print_players_move(this->_players.get_name(), move);
@@ -152,22 +168,21 @@ bool HexGame::_verify_move(std::pair<int, int>& m, int& field) {
 }
 
 
-// creates 4 virtual nodes at the end of all real fields to be used
-// as virtual nodes that each player has to connect to win the game
+// creates 4 virtual nodes that don't exist on the board, one per edge of the
+// board. each of them has edges to all fields on the corresponding edge of the
+// board. they are used to easily test if a path from one edge of the board to
+// the opposing edge has been built.
 void HexGame::_create_player_src_dst_nodes() {
-  //
-  // create 2 virtual nodes per player. each virtual node will be connected
-  // to all nodes on one edge of the board. by checking if there is a path
-  // from one of the virtual nodes to the opposite one we can know if a player
-  // has won the game.
+
+  // set the starting number of the virtual nodes
   this->_players.set_virtual_start(pow(this->_board_size, 2) + 1);
 
   for (int i = 0; i <= 1; ++i) {
     std::pair< std::vector<int>, std::vector<int> > board_edge_nodes;
     board_direction dir;
-    std::pair<int, int> src_dst_nodes =
-      this->_players.get_src_dst_nodes(i);
+    std::pair<int, int> src_dst_nodes = this->_players.get_src_dst_nodes(i);
 
+    // the first player always plays west <-> east, the second north <-> south
     if (i == 0) {
       dir = board_direction::WEST_EAST;
     } else {
@@ -175,11 +190,9 @@ void HexGame::_create_player_src_dst_nodes() {
     }
 
     // get all fields on the two opposite sides of the board that the current
-    // player has to connect. store them into board_edge_nodes
+    // player has to connect. store them into board_edge_nodes.
     HexBoard::get_board_edge_fields(
-      this->_board_size,
-      dir,
-      board_edge_nodes
+      this->_board_size, dir, board_edge_nodes
     );
 
     // connect nodes of one board edge to one of the players virtual nodes
