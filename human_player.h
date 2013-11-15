@@ -6,7 +6,7 @@
 #include "./player.h"
 
 
-// this class represents a user player on the console
+// extends the Player object to represent a human player
 class HumanPlayer: public Player {
   private:
     bool _is_numeric(std::string&);

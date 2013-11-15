@@ -12,6 +12,8 @@
 // defines the possible player types
 enum class player_type: short {HUMAN};
 
+
+// a container to hold and use the player objects
 class PlayerContainer {
   private:
     std::vector<Player*> _players;
@@ -24,7 +26,6 @@ class PlayerContainer {
     void swap_player_position();
     void set_virtual_start(int);
 
-    bool add_player(Player*);
     int create_player(const char*, const player_type);
 
     char get_symbol(int);

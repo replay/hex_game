@@ -17,12 +17,10 @@ const std::map<board_direction, std::string> direction_string {
   {board_direction::NORTH_SOUTH, std::string("North - South")}
 };
 
-class HexBoard {
-  private:
-    static void _newline(const int, int&);
 
+// implements all logic that's necessary to calculate hexboard related data
+class HexBoard {
   public:
-    static void print_board(std::vector<char*>&, int);
     static void get_adjacent_fields(int, int, std::list<int>&);
     static void get_board_edge_fields(const int, board_direction,
       std::pair< std::vector<int>, std::vector<int> >&);

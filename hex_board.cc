@@ -1,62 +1,8 @@
 #include "./hex_board.h"
 
 
-// print the hex board in ascii art
-void HexBoard::print_board(std::vector<char*>& fields, int board_size) {
-  int indentations = 0;
-
-  std::cout << " ";
-  for (int i = 0; i < board_size; ++i) {
-    std::cout << std::setw(4) << i + 1;
-  }
-  std::cout << std::setw(4) << "(x)";
-  std::cout << std::endl;
-
-  for (auto i = fields.begin(); i < fields.end(); ++i) {
-    if ((i - fields.begin()) % board_size != 0) {
-      std::cout << " - ";
-    } else {
-      std::cout << std::setw(3) << (i - fields.begin()) / board_size + 1 << " ";
-    }
-
-    std::cout << *i;
-
-    if ((i - fields.begin()) % board_size == board_size - 1 &&
-        (i - fields.begin()) != pow(board_size, 2) - 1) {
-      HexBoard::_newline(board_size, indentations);
-    }
-  }
-
-  std::cout << std::endl;
-  for (int i = 0; i < indentations * 2; ++i)
-    std::cout << " ";
-  std::cout << "  (y)";
-
-  std::cout << std::endl;
-}
-
-
-// horizontal row on the ascii-art board
-void HexBoard::_newline(const int board_size, int& indentations) {
-  std::cout << std::endl;
-
-  for (int i = 0; i < indentations * 2; ++i)
-    std::cout << " ";
-  std::cout << "     ";
-
-
-  for (int i = 0; i < board_size - 1; ++i)
-    std::cout << "\\ / ";
-  std::cout << "\\" << std::endl;
-
-  ++indentations;
-
-  for (int i = 0; i < indentations * 2; ++i)
-    std::cout << " ";
-}
-
-
-// creates a list of all fields on either the vertical or the horizontal edges
+// creates a list of all fields on either the two vertical or the two
+// horizontal edges of the hex board.
 void HexBoard::get_board_edge_fields(const int board_size, board_direction dir,
   std::pair< std::vector<int>, std::vector<int> >& edges) {
 
@@ -64,7 +10,7 @@ void HexBoard::get_board_edge_fields(const int board_size, board_direction dir,
   int incr = 1;
   int dst_start = board_size * (board_size - 1);
 
-  // if HORIZONTAL, then update values
+  // if HORIZONTAL, then overwrite values
   if (dir == board_direction::WEST_EAST) {
     dst_start = board_size - 1;
     incr = board_size;
@@ -81,7 +27,8 @@ void HexBoard::get_board_edge_fields(const int board_size, board_direction dir,
 
 
 // creates a list of all fields that are adjacent to a given field based
-// on the size of the hex board
+// on the size of the hex board. takes into account that fields at the edge
+// of the board do not have all 6 adjacent fields.
 void HexBoard::get_adjacent_fields(
   int field, int board_size, std::list<int>& adjacent_fields) {
   std::vector< std::pair<int, bool> > surrounding_hexagon;

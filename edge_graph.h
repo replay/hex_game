@@ -8,17 +8,21 @@
 #include <algorithm>
 #include <cmath>
 
+
+// represents the graph of edges across the hex board
 class EdgeGraph {
   private:
     std::vector<bool> _reachable;
 
-    // a vector of edges for each field
+    // a vector of edges for each node
     std::map< int, std::vector< int > > _edges;
 
   public:
     EdgeGraph();
-    void add_edge(int, int);
+
     void add_edges(int, std::list<int>&);
+    void add_edge(int, int);
+
     bool fields_are_connected(std::pair<int, int>);
 
 };

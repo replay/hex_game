@@ -1,5 +1,7 @@
 #include "./hex_game.h"
 
+
+// the constructor initializes a new game and starts playing
 HexGame::HexGame() {
   std::vector<char*> board_symbols;
 
@@ -70,7 +72,7 @@ HexGame::HexGame() {
   while (true) {
 
     // print the whole current board
-    HexBoard::print_board(board_symbols, this->_board_size);
+    AsciiArt::print_board(board_symbols, this->_board_size);
 
     // ask player for the next move
     std::cout << this->_players.get_name(this->_players.get_active_id())
@@ -95,7 +97,7 @@ HexGame::HexGame() {
   // print some nice banner for the winner
   AsciiArt::announce_winner(
       this->_players.get_name(this->_players.get_active_id()));
-  HexBoard::print_board(board_symbols, this->_board_size);
+  AsciiArt::print_board(board_symbols, this->_board_size);
 }
 
 

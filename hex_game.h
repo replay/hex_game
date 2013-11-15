@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <vector>
 #include <tuple>
-
 #include <cmath>
 
 #include "./field.h"
@@ -13,6 +12,7 @@
 #include "./hex_board.h"
 #include "./edge_graph.h"
 #include "./player_container.h"
+
 
 // implements the logic of the hex game
 class HexGame {

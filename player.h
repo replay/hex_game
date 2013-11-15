@@ -4,8 +4,9 @@
 #include <utility>
 #include <iostream>
 
-// this is the abstract base class for a player
-// it should be extended to be a human or a computer player
+
+// this is the abstract base class for a player. it should be extended to be
+// any type of player like human or computer or whatever else
 class Player {
   protected:
     std::pair<int, int> _src_dst;
@@ -22,7 +23,6 @@ class Player {
     std::string get_name();
     void set_symbol(const char);
     char get_symbol();
-    int get_id();
     void set_src_dst_nodes(std::pair<int, int>);
     std::pair<int, int> get_src_dst_nodes();
 };

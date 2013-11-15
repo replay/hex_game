@@ -3,8 +3,9 @@
 
 #include <iostream>
 
-class Field {
 
+// represents a single field on the hex board
+class Field {
   public:
     Field();
     void use_field(int, char);
@@ -16,7 +17,5 @@ class Field {
     int _owner = -1;
     char _symbol = '.';
 };
-
-std::ostream& operator<< (std::ostream&, Field&);
 
 #endif  // FIELD_H_
