@@ -4,8 +4,8 @@ HexGame::HexGame() {
   std::vector<char*> board_symbols;
 
   // two players and one edge graph for each of them
-  this->_players.add_player(new HumanPlayer("player1", 'X'));
-  this->_players.add_player(new HumanPlayer("player2", 'O'));
+  this->_players.create_player("player1", player_type::HUMAN);
+  this->_players.create_player("player2", player_type::HUMAN);
 
   // ask who gets the first move
   // the one who gets the first move will be the first element in the vector 

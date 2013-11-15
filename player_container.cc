@@ -7,13 +7,15 @@ PlayerContainer::~PlayerContainer() {
 }
 
 
-bool PlayerContainer::add_player(Player* p) {
-  if (this->_players.size() >= 2)
-    return false;
-
-  this->_players.push_back(p);
-
-  return true;
+char PlayerContainer::_get_free_symbol() {
+  switch (this->_players.size() + 1) {
+    case (1):
+      return 'O';
+      break;;
+    case (2):
+      return 'X';
+      break;
+  }
 }
 
 
@@ -40,8 +42,29 @@ void PlayerContainer::set_virtual_start(int virtual_start) {
 }
 
 
-int PlayerContainer::get_active_id() {
-  return this->_currently_active;
+int PlayerContainer::create_player(const char* player_name_c, const player_type type) {
+  Player* player;
+  std::string player_name (player_name_c);
+
+  switch(type) {
+    case (player_type::HUMAN):
+      player = new HumanPlayer(player_name, this->_get_free_symbol());
+      break;
+  }
+
+  this->_players.push_back(player);
+
+  return this->_players.size();
+}
+
+
+bool PlayerContainer::add_player(Player* p) {
+  if (this->_players.size() >= 2)
+    return false;
+
+  this->_players.push_back(p);
+
+  return true;
 }
 
 
@@ -50,6 +73,11 @@ char PlayerContainer::get_symbol(int p) {
 }
 char PlayerContainer::get_symbol() {
   return this->_players[this->_currently_active]->get_symbol();
+}
+
+
+int PlayerContainer::get_active_id() {
+  return this->_currently_active;
 }
 
 
