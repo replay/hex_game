@@ -11,7 +11,6 @@ void EdgeGraph::add_edges(int src_f, std::list<int>& connect_fields) {
 
 
 void EdgeGraph::add_edge(int f1, int f2) {
-  std::cout << "adding edge: " << f1 << ":" << f2 << std::endl;
   this->_edges[f1].push_back(f2);
   this->_edges[f2].push_back(f1);
 }

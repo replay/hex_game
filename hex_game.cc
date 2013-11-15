@@ -10,13 +10,7 @@ HexGame::HexGame() {
   // ask who gets the first move
   // the one who gets the first move will be the first element in the vector 
   if (AsciiArt::ask_user("who gets the first move?", 
-        std::accumulate(
-          this->_players.begin(), this->_players.end(),
-          std::vector<std::string>(), [](std::vector<std::string>& v, Player* p) {
-            v.push_back(p->get_name());
-            return v;
-          }
-        )
+        this->_players.get_all_player_names()
       ) == 1) {
 
     // the other player should move first
@@ -161,8 +155,7 @@ bool HexGame::_verify_move(std::pair<int, int>& m, int& field) {
 // creates 4 virtual nodes at the end of all real fields to be used
 // as virtual nodes that each player has to connect to win the game
 void HexGame::_create_player_src_dst_nodes() {
-  Player* player;
-
+  //
   // create 2 virtual nodes per player. each virtual node will be connected
   // to all nodes on one edge of the board. by checking if there is a path
   // from one of the virtual nodes to the opposite one we can know if a player

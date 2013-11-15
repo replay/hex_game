@@ -4,7 +4,6 @@
 #include <iostream>
 #include <algorithm>
 #include <vector>
-#include <functional>
 #include <tuple>
 
 #include <cmath>

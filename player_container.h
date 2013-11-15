@@ -4,6 +4,7 @@
 #include <vector>
 #include <utility>
 #include <iostream>
+#include <numeric>
 
 #include "./player.h"
 #include "./human_player.h"
@@ -41,6 +42,8 @@ class PlayerContainer {
 
     std::vector<Player*>::iterator begin();
     std::vector<Player*>::iterator end();
+
+    std::vector<std::string> get_all_player_names();
 };
 
 #endif  // PLAYER_CONTAINER_H_

@@ -112,3 +112,13 @@ std::vector<Player*>::iterator PlayerContainer::end() {
   return this->_players.end();
 }
 
+
+std::vector<std::string> PlayerContainer::get_all_player_names() {
+  return std::accumulate(
+    this->_players.begin(), this->_players.end(),
+    std::vector<std::string>(), [](std::vector<std::string>& v, Player* p) {
+      v.push_back(p->get_name());
+      return v;
+    }
+  );
+}
