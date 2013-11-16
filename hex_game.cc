@@ -85,9 +85,10 @@ HexGame::HexGame() {
 
     // break if a player has won the game
     if (this->_edge_graphs[this->_players.get_active_id()]
-      ->fields_are_connected(
-        this->_players.get_src_dst_nodes(
-          this->_players.get_active_id())))
+          ->fields_are_connected(
+            this->_players.get_src_dst_nodes(
+              this->_players.get_active_id()
+      )))
       break;
 
     // swap players because it's the other one's turn

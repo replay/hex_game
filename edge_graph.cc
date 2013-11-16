@@ -4,6 +4,11 @@
 EdgeGraph::EdgeGraph() {}
 
 
+// returns the key of the last element in _edges (biggest)
+int EdgeGraph::_biggest_edge_key() {
+  return this->_edges.rbegin()->first;
+}
+
 // add edges from src_f to each edge in connect_fields
 void EdgeGraph::add_edges(int src_f, std::list<int>& connect_fields) {
   for (auto i: connect_fields)
@@ -22,26 +27,34 @@ void EdgeGraph::add_edge(int f1, int f2) {
 bool EdgeGraph::fields_are_connected(std::pair<int, int> src_dst) {
 
   // the additional 4 is for the virtual nodes on each edge of the board
-  std::vector<bool> reachable(this->_edges.size(), false);
+  std::vector<bool> reachable(this->_biggest_edge_key(), false);
 
   // list of fields that should be visited
-  std::list<int> checklist;
+  std::queue<int> checklist;
+  int src_check_node;
 
   // start with src
-  checklist.push_back(src_dst.first);
+  checklist.push(src_dst.first);
 
   // iterate over the fields in checklist while all
   // connected nodes are being appended at the end of it
-  for (auto i: checklist)
-    for (auto j: this->_edges[i])
-      if (!reachable[j])
+  while (!checklist.empty()) {
+
+    // get and remove the first element in the checklist queue
+    src_check_node = checklist.front();
+    checklist.pop();
+
+    for (auto dst_check_node: this->_edges[src_check_node]) {
+      if (!reachable[dst_check_node])
       {
         // this node should be checked next
-        checklist.push_back(j);
+        checklist.push(dst_check_node);
 
         // we know this node is reachable and we don't need to check it anymore
-        reachable[j] = true;
+        reachable[dst_check_node] = true;
       }
+    }
+  }
 
   // if dst is reachable we have found a winner
   if (reachable[src_dst.second])

@@ -2,6 +2,7 @@
 #define EDGE_GRAPH_H_
 
 #include <list>
+#include <queue>
 #include <iostream>
 #include <map>
 #include <utility>
@@ -16,6 +17,9 @@ class EdgeGraph {
 
     // a vector of edges for each node
     std::map< int, std::vector< int > > _edges;
+
+    // returns the key of the last element in _edges (biggest)
+    inline int _biggest_edge_key();
 
   public:
     EdgeGraph();
